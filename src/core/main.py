@@ -3,7 +3,7 @@ from session import TrainingSession
 
 if __name__ == "__main__":
     # Create a sample range
-    r = load_range_from_csv("6max_100bb.csv", "6max 100bb")
+    r = load_range_from_csv("6max_100bb_rfi.csv", "6max 100bb RFI")
 
     session = TrainingSession(r)
 

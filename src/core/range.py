@@ -1,6 +1,6 @@
 import csv
 from pathlib import Path
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple, List, Set
 
 import constants
 
@@ -12,6 +12,7 @@ class PreFlopRange:
         self.name = name
         # Dict[(position, hand)] -> action
         self.entries: Dict[Tuple[str, str], str] = {}
+        self.positions: Set[str] = set()
 
     def set_action(self, position: str, hand: str, action: str):
         if position not in constants.POSITIONS:
@@ -21,6 +22,7 @@ class PreFlopRange:
         if action not in constants.ACTIONS:
             raise ValueError(f"Invalid action: {action}")
         self.entries[(position, hand)] = action
+        self.positions.add(position)
 
     def get_action(self, position: str, hand: str) -> str:
         return self.entries.get((position, hand), "fold")  # default to fold

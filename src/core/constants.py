@@ -1,6 +1,6 @@
 from typing import List
 
-POSITIONS = ["UTG", "MP", "CO", "BTN", "SB", "BB"]
+POSITIONS = ["UTG", "HJ", "CO", "BTN", "SB", "BB"]
 ACTIONS = ["fold", "open", "call", "3bet", "4bet"]
 
 

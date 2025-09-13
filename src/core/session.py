@@ -20,10 +20,11 @@ class TrainingSession:
         self.preflop_range = preflop_range
         self.attempts: List[Attempt] = []
 
-    @staticmethod
-    def random_scenario() -> Tuple[str, str]:
+    def random_scenario(self) -> Tuple[str, str]:
         """Return (position, hand)."""
         position = random.choice(constants.POSITIONS)
+        while position not in self.preflop_range.positions:
+            position = random.choice(constants.POSITIONS)
         hand = random.choice(constants.HANDS)
         return position, hand
 
