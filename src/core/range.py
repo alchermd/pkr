@@ -26,7 +26,7 @@ def generate_hands() -> List[str]:
 HANDS = generate_hands()
 
 
-class PreflopRange:
+class PreFlopRange:
     def __init__(self, name: str):
         self.name = name
         # Dict[(position, hand)] -> action
@@ -46,7 +46,7 @@ class PreflopRange:
 
 
 class TrainingSession:
-    def __init__(self, preflop_range: PreflopRange):
+    def __init__(self, preflop_range: PreFlopRange):
         self.preflop_range = preflop_range
         self.attempts: List[Dict] = []
 
@@ -77,12 +77,12 @@ class TrainingSession:
         return {"accuracy": correct / len(self.attempts)}
 
 
-def load_range_from_csv(filename: str, name: str = None) -> PreflopRange:
+def load_range_from_csv(filename: str, name: str = None) -> PreFlopRange:
     """
     Parse a CSV with header: pos,hand,action
     Returns a PreflopRange instance.
     """
-    preflop_range = PreflopRange(name)
+    preflop_range = PreFlopRange(name)
 
     with open(RANGE_FILES_DIR / filename, newline="") as f:
         reader = csv.DictReader(f)
