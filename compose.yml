@@ -1,0 +1,41 @@
+services:
+  s:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python src/manage.py runserver 0.0.0.0:8000
+    image: s:latest
+    volumes:
+      - ./src:/app/src
+      - ./entrypoint.sh:/app/entrypoint.sh
+      - ./pyproject.toml:/app/pyproject.toml
+      - ./uv.lock:/app/uv.lock
+    ports:
+      - "8000:8000"
+    environment:
+      DEBUG: 1
+      POSTGRES_DB: pkr_db
+      POSTGRES_USER: pkr_user
+      POSTGRES_PASSWORD: pkr_pass
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      SECRET_KEY: dev_secret_key
+      ALLOWED_HOSTS: localhost 127.0.0.1
+      STATIC_ROOT: src/staticfiles
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pkr_db
+      POSTGRES_USER: pkr_user
+      POSTGRES_PASSWORD: pkr_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
