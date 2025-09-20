@@ -2,7 +2,7 @@ import csv
 from pathlib import Path
 from typing import Dict, Tuple, List, Set
 
-import constants
+from core import constants
 
 RANGE_FILES_DIR = Path(__file__).parent / "range_files"
 
@@ -44,3 +44,28 @@ def load_range_from_csv(filename: str, name: str = None) -> PreFlopRange:
             preflop_range.set_action(pos, hand, action)
 
     return preflop_range
+
+
+def make_grid(preflop_range: PreFlopRange, position: str):
+    """
+    Build a 13x13 grid for a specific position.
+    Each cell is {label: hand, action: str}.
+    """
+    grid = []
+    for i, r1 in enumerate(constants.RANKS):
+        row = []
+        for j, r2 in enumerate(constants.RANKS):
+            if i < j:
+                hand = f"{r1}{r2}s"
+            elif i > j:
+                hand = f"{r2}{r1}o"
+            else:
+                hand = f"{r1}{r1}"
+            row.append(
+                {
+                    "label": hand,
+                    "action": preflop_range.get_action(position, hand),
+                }
+            )
+        grid.append(row)
+    return grid

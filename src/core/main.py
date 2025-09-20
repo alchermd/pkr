@@ -1,7 +1,7 @@
 import sys
 
-from range import load_range_from_csv
-from session import TrainingSession
+from core.range import load_range_from_csv
+from core.session import TrainingSession
 
 if __name__ == "__main__":
     r = load_range_from_csv("6max_100bb_rfi.csv", "6max 100bb RFI")

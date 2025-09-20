@@ -2,8 +2,8 @@ import dataclasses
 import random
 from typing import Dict, List, Tuple
 
-import constants
-from range import PreFlopRange
+from core import constants
+from core.range import PreFlopRange
 
 
 @dataclasses.dataclass
