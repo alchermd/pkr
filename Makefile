@@ -5,7 +5,7 @@ REGISTRY := registry.digitalocean.com/alcher-dev-registry
 IMAGE_LATEST := $(REGISTRY)/$(APP_NAME):latest
 IMAGE_UNIQUE := $(REGISTRY)/$(APP_NAME):$(shell git rev-parse --short HEAD)
 DC := docker compose
-MANAGE := $(DC) exec s python src/manage.py
+MANAGE := $(DC) exec --workdir /app/src pkr python manage.py
 
 .PHONY: help run shell migrate makemigrations superuser
 

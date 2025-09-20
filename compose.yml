@@ -1,5 +1,5 @@
 services:
-  s:
+  pkr:
     build:
       context: .
       dockerfile: Dockerfile
