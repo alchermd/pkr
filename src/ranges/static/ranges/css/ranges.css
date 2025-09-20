@@ -1,83 +1,36 @@
-.range-grid {
-    border-collapse: collapse;
-}
-
-.range-grid td {
+.cell {
     width: 40px;
     height: 40px;
-    text-align: center;
-    border: 1px solid #444; /* always visible, neutral border */
-    color: white;
+    line-height: 40px; /* vertical centering */
+    border: 1px solid #444;
+    font-size: 0.8rem;
+    color: #fff;
 }
 
-/* Generic cell colors per action */
-.cell.action-open {
+.action-open {
     background-color: #4caf50;
 }
 
-/* green */
-.cell.action-fold {
+.action-fold {
     background-color: #ccc;
-    color: black;
+    color: #000;
 }
 
-.cell.action-call {
+.action-call {
     background-color: #2196f3;
 }
 
-/* blue */
-.cell.action-3bet {
+.action-3bet {
     background-color: #f44336;
 }
 
-/* red */
-.cell.action-check {
+.action-check {
     background-color: #ff9800;
-}
-
-/* orange */
-
-/* Legend styling */
-.legend {
-    margin-top: 1em;
-}
-
-.legend ul {
-    list-style: none;
-    padding: 0;
-}
-
-.legend li {
-    margin: 0.2em 0;
-    display: flex;
-    align-items: center;
 }
 
 .legend-box {
     display: inline-block;
     width: 20px;
     height: 20px;
-    margin-right: 0.5em;
-    border: 1px solid #444; /* matches grid cell borders */
-}
-
-/* Reuse the same color classes */
-.legend-box.action-open {
-    background-color: #4caf50;
-}
-
-.legend-box.action-fold {
-    background-color: #ccc;
-}
-
-.legend-box.action-call {
-    background-color: #2196f3;
-}
-
-.legend-box.action-3bet {
-    background-color: #f44336;
-}
-
-.legend-box.action-check {
-    background-color: #ff9800;
+    border: 1px solid #444;
 }
