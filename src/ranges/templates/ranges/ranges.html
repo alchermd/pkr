@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Preflop RFI Range</title>
+    <link rel="stylesheet" href="{% static 'ranges/css/ranges.css' %}" />
+</head>
+<body>
+<h1>Preflop RFI Range</h1>
+<h2>Position: {{ position }}</h2>
+<table class="range-grid">
+    {% for row in grid %}
+        <tr>
+            {% for cell in row %}
+                <td class="cell action-{{ cell.action }}">{{ cell.label }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+
+<div class="legend">
+    <h4>Legend</h4>
+    <ul>
+        <li><span class="legend-box action-open"></span> Open (raise)</li>
+        <li><span class="legend-box action-fold"></span> Fold</li>
+    </ul>
+</div>
+</body>
+</html>
