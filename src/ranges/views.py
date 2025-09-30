@@ -1,21 +1,13 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from core import constants
-from core.range import load_range_from_csv, make_grid, RANGE_FILES_DIR, PreFlopRange
-
-ranges: dict[str, PreFlopRange] = {
-    "6max-100bb-rfi": load_range_from_csv(
-        RANGE_FILES_DIR / "6max_100bb_rfi.csv",
-        "6max 100bb RFI",
-    )
-}
+from core.range import load_range_from_csv, make_grid
+from ranges.models import PreFlopRange
 
 
-def ranges_view(request: HttpRequest, name: str) -> HttpResponse:
-    preflop_range = ranges.get(name)
-    if not preflop_range:
-        return HttpResponse("Range not found", status=404)
+def ranges_view(request: HttpRequest, range_id: int) -> HttpResponse:
+    preflop_range = get_object_or_404(PreFlopRange, id=range_id).to_domain()
 
     grids = [
         (pos, make_grid(preflop_range, pos))
