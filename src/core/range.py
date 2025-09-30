@@ -1,4 +1,5 @@
 import csv
+import json
 from pathlib import Path
 from typing import Dict, Tuple, List, Set
 
@@ -43,6 +44,27 @@ def load_range_from_csv(filename: str, name: str = None) -> PreFlopRange:
             action = row["action"].strip()
             preflop_range.set_action(pos, hand, action)
 
+    return preflop_range
+
+
+def load_range(base_name: str) -> PreFlopRange:
+    """
+    Looks for the CSV and metadata (JSON) file for the given base name and builds a PreFlopRange instance.
+    """
+    meta_path = RANGE_FILES_DIR / f"{base_name}.meta.json"
+    if not meta_path.exists():
+        raise FileNotFoundError(f"No metadata file found for {base_name}")
+
+    with open(meta_path) as f:
+        meta = json.load(f)
+
+    csv_filename = f"{base_name}.csv"
+    csv_path = RANGE_FILES_DIR / csv_filename
+    if not csv_path.exists():
+        raise FileNotFoundError(f"No CSV file found for {base_name}")
+
+    preflop_range = load_range_from_csv(csv_filename)
+    preflop_range.name = meta["name"]
     return preflop_range
 
 
