@@ -3,23 +3,11 @@
 
 import os
 import sys
-from django.conf import settings
 
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-    if settings.DEBUG:
-        import pydevd_pycharm
-
-        pydevd_pycharm.settrace(
-            "host.docker.internal",
-            port=4200,
-            stdoutToServer=True,
-            stderrToServer=True,
-            suspend=False,
-        )
-
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
