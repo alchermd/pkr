@@ -8,8 +8,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
+
+ARG INSTALL_DEV=false
+
 RUN pip install --no-cache-dir uv \
-    && uv sync --frozen --no-dev --python=$(which python3)
+    &&if [ "$INSTALL_DEV" = "true" ]; then \
+         uv sync --frozen --python=$(which python3); \
+       else \
+         uv sync --frozen --no-dev --python=$(which python3); \
+       fi
 
 COPY src/ ./src
 
