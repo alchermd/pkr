@@ -8,44 +8,18 @@
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
           crossorigin="anonymous"/>
     <link rel="stylesheet" href="{% static 'ranges/css/ranges.css' %}" />
+
+    {% if DEBUG %}
+        <script type="module" src="{% static 'ranges/js/vite-react-refresh.js' %}"></script>
+        <script type="module" src="http://localhost:5173/src/ranges/range-grid/main.jsx"></script>
+    {% else %}
+        <script type="module" src="{% static 'ranges/range-grid.js' %}"></script>
+    {% endif %}
 </head>
 <body class="py-5">
+<div id="root"></div>
 
-<h1 class="mb-4 text-center">{{ range_name }}</h1>
-
-<div class="container-fluid">
-    <div class="row">
-    {% for position, grid in grids %}
-        <div class="col-md-4 mb-5 d-flex flex-column align-items-center text-center">
-            <h2 class="h5 mb-3">Position: {{ position }}</h2>
-
-            <div class="range-grid d-inline-block mb-3">
-            {% for row in grid %}
-                <div class="d-flex">
-                    {% for cell in row %}
-                        <div class="cell action-{{ cell.action }} flex-fill text-center">
-                            {{ cell.label }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-            </div>
-
-            <div class="legend">
-                <h6>Legend</h6>
-                <div class="d-flex flex-wrap justify-content-center gap-3">
-                    <div class="d-flex align-items-center">
-                        <span class="legend-box action-open me-2"></span> Open (raise)
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <span class="legend-box action-fold me-2"></span> Fold
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-    </div>
-</div>
+{{ initial_data|json_script:"initial-data" }}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"

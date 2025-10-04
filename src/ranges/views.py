@@ -19,7 +19,9 @@ def ranges_view(request: HttpRequest, range_id: int) -> HttpResponse:
         )
     ]
     ctx = {
-        "grids": grids,
-        "range_name": preflop_range.name,
+        "initial_data": {
+            "grids": grids,
+            "range_name": preflop_range.name,
+        }
     }
     return render(request, "ranges/ranges.html", ctx)
