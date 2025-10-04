@@ -55,6 +55,13 @@ i:
 idev:
 	uv add --dev $(pkg)
 
+# Frontend commands
+finit:
+	cd src/frontend && npm install
+
+fup:
+	cd src/frontend && npm run dev
+
 # Catch-all: forward any unknown target to manage.py
 %:
 	$(MANAGE) $@
