@@ -6,6 +6,8 @@ IMAGE_LATEST := $(REGISTRY)/$(APP_NAME):latest
 IMAGE_UNIQUE := $(REGISTRY)/$(APP_NAME):$(shell git rev-parse --short HEAD)
 DC := docker compose
 MANAGE := $(DC) exec --workdir /app/src pkr python manage.py
+UVR := uv run
+DJ := cd src && $(UVR) python manage.py
 
 .PHONY: help run shell migrate makemigrations superuser
 
@@ -22,6 +24,10 @@ help:
 	@echo "  make <command>                # Run 'manage.py <command>'"
 
 up:
+	uv sync
+	$(DJ) runserver
+
+dup:
 	$(DC) up --build
 
 # Push to DO Container Registry
@@ -38,16 +44,16 @@ push:
 	echo "Successfully pushed $(IMAGE_LATEST) and $(IMAGE_UNIQUE)"
 
 shell:
-	$(MANAGE) shell
+	$(DJ) shell
 
 migrate:
-	$(MANAGE) migrate
+	$(DJ) migrate
 
 makemigrations:
-	$(MANAGE) makemigrations
+	$(DJ) makemigrations
 
-superuser:
-	$(MANAGE) createsuperuser
+createsuperuser:
+	$(DJ) createsuperuser
 
 i:
 	uv add $(pkg)
@@ -64,4 +70,4 @@ fup:
 
 # Catch-all: forward any unknown target to manage.py
 %:
-	$(MANAGE) $@
+	$(DJ) $@
