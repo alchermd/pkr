@@ -20,3 +20,8 @@ make up # Start backend and database
 make finit                   # Install dependencies
 make fup                     # Run the frontend in watch/development mode
 ```
+
+## Debugging with PyCharm
+
+Included is a PyCharm run configuration, and should work out of the box if you open the project root in PyCharm. To debug, use the `pkr`
+run configuration.
