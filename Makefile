@@ -30,6 +30,9 @@ up:
 dup:
 	$(DC) up --build
 
+dsmoke:
+	bash ./tests/docker-smoke.sh
+
 # Push to DO Container Registry
 push:
 	# Login
@@ -54,6 +57,12 @@ makemigrations:
 
 createsuperuser:
 	$(DJ) createsuperuser
+
+test:
+	$(DJ) test
+
+dtest:
+	bash ./tests/docker-test.sh
 
 i:
 	uv add $(pkg)
