@@ -2,3 +2,8 @@
 logs/
 *.log
 .env.mk
+
+# Ignore all idea files except runConfigurations
+.idea/*
+!.idea/runConfigurations/
+!.idea/runConfigurations/**
