@@ -18,7 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from marketing import views as marketing_views
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("ranges/", include("ranges.urls")),
+    path("", marketing_views.home, name="home"),
 ]
