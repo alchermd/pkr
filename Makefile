@@ -64,6 +64,10 @@ test:
 dtest:
 	bash ./tests/docker-test.sh
 
+format:
+	uv format
+	uv tool run djlint src --reformat
+
 i:
 	uv add $(pkg)
 
