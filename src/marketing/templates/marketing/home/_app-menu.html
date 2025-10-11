@@ -1,0 +1,155 @@
+<div class="container py-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        <!-- Range Trainer -->
+        <div class="col d-flex">
+            <a href="{% url 'ranges:ranges' range_id=1 %}"
+               class="text-decoration-none text-reset w-100 d-flex flex-column">
+                <div class="card w-100 h-100 d-flex flex-column position-relative">
+                    <div class="card-body text-center d-flex flex-column">
+                        <div class="avatar avatar-lg bg-indigo-lt text-indigo mb-3 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="ti ti-grid-dots fs-2"></i>
+                        </div>
+                        <h3 class="card-title mb-1">Range Trainer</h3>
+                        <p class="text-muted mb-2">Practice preflop ranges and visualize 13×13 hand grids.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Postflop Trainer -->
+        <div class="col d-flex">
+            <a class="text-decoration-none text-reset w-100 d-flex flex-column"
+               style="cursor: not-allowed;
+                      opacity: 0.85">
+                <div class="card w-100 h-100 d-flex flex-column position-relative">
+                    <span class="badge bg-orange text-white text-uppercase position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    <div class="card-body text-center d-flex flex-column">
+                        <div class="avatar avatar-lg bg-green-lt text-green mb-3 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="ti ti-cards fs-2"></i>
+                        </div>
+                        <h3 class="card-title mb-1">Postflop Trainer</h3>
+                        <p class="text-muted mb-2">Simulate flop, turn, and river spots with solver-inspired guidance.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Session Review -->
+        <div class="col d-flex">
+            <a class="text-decoration-none text-reset w-100 d-flex flex-column"
+               style="cursor: not-allowed;
+                      opacity: 0.85">
+                <div class="card w-100 h-100 d-flex flex-column position-relative">
+                    <span class="badge bg-orange text-white text-uppercase position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    <div class="card-body text-center d-flex flex-column">
+                        <div class="avatar avatar-lg bg-pink-lt text-pink mb-3 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="ti ti-chart-bar fs-2"></i>
+                        </div>
+                        <h3 class="card-title mb-1">Session Review</h3>
+                        <p class="text-muted mb-2">Upload hand histories to identify leaks and review critical decisions.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Equity Calculator -->
+        <div class="col d-flex">
+            <a class="text-decoration-none text-reset w-100 d-flex flex-column"
+               style="cursor: not-allowed;
+                      opacity: 0.85">
+                <div class="card w-100 h-100 d-flex flex-column position-relative">
+                    <span class="badge bg-orange text-white text-uppercase position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    <div class="card-body text-center d-flex flex-column">
+                        <div class="avatar avatar-lg bg-cyan-lt text-cyan mb-3 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="ti ti-percentage fs-2"></i>
+                        </div>
+                        <h3 class="card-title mb-1">Equity Calculator</h3>
+                        <p class="text-muted mb-2">Compare hand equities and run custom range-vs-range simulations.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Range Library -->
+        <div class="col d-flex">
+            <a href="/ranges/library/"
+               class="text-decoration-none text-reset w-100 d-flex flex-column"
+               style="cursor: pointer">
+                <div class="card w-100 h-100 d-flex flex-column position-relative">
+                    <span class="badge bg-orange text-white text-uppercase position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    <div class="card-body text-center d-flex flex-column">
+                        <div class="avatar avatar-lg bg-lime-lt text-lime mb-3 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="ti ti-folder fs-2"></i>
+                        </div>
+                        <h3 class="card-title mb-1">Range Library</h3>
+                        <p class="text-muted mb-2">Browse and manage preflop charts by position or stack size.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Hand Replayer -->
+        <div class="col d-flex">
+            <a class="text-decoration-none text-reset w-100 d-flex flex-column"
+               style="cursor: not-allowed;
+                      opacity: 0.85">
+                <div class="card w-100 h-100 d-flex flex-column position-relative">
+                    <span class="badge bg-orange text-white text-uppercase position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    <div class="card-body text-center d-flex flex-column">
+                        <div class="avatar avatar-lg bg-violet-lt text-violet mb-3 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="ti ti-player-play fs-2"></i>
+                        </div>
+                        <h3 class="card-title mb-1">Hand Replayer</h3>
+                        <p class="text-muted mb-2">Replay hands visually to review key spots and decision logic.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Opponent Tracker -->
+        <div class="col d-flex">
+            <a class="text-decoration-none text-reset w-100 d-flex flex-column"
+               style="cursor: not-allowed;
+                      opacity: 0.85">
+                <div class="card w-100 h-100 d-flex flex-column position-relative">
+                    <span class="badge bg-orange text-white text-uppercase position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    <div class="card-body text-center d-flex flex-column">
+                        <div class="avatar avatar-lg bg-red-lt text-red mb-3 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="ti ti-user-chart fs-2"></i>
+                        </div>
+                        <h3 class="card-title mb-1">Opponent Tracker</h3>
+                        <p class="text-muted mb-2">Keep notes and profiles of opponents with auto-aggregated stats.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Bankroll Manager -->
+        <div class="col d-flex">
+            <a class="text-decoration-none text-reset w-100 d-flex flex-column"
+               style="cursor: not-allowed;
+                      opacity: 0.85">
+                <div class="card w-100 h-100 d-flex flex-column position-relative">
+                    <span class="badge bg-orange text-white text-uppercase position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    <div class="card-body text-center d-flex flex-column">
+                        <div class="avatar avatar-lg bg-amber-lt text-amber mb-3 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="ti ti-wallet fs-2"></i>
+                        </div>
+                        <h3 class="card-title mb-1">Bankroll Manager</h3>
+                        <p class="text-muted mb-2">Track results across sessions and manage staking and bankroll rules.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Strategy Notes -->
+        <div class="col d-flex">
+            <a class="text-decoration-none text-reset w-100 d-flex flex-column"
+               style="cursor: not-allowed;
+                      opacity: 0.85">
+                <div class="card w-100 h-100 d-flex flex-column position-relative">
+                    <span class="badge bg-orange text-white text-uppercase position-absolute top-0 end-0 m-2">Coming Soon</span>
+                    <div class="card-body text-center d-flex flex-column">
+                        <div class="avatar avatar-lg bg-gray-lt text-gray mb-3 mx-auto d-flex align-items-center justify-content-center">
+                            <i class="ti ti-notes fs-2"></i>
+                        </div>
+                        <h3 class="card-title mb-1">Strategy Notes</h3>
+                        <p class="text-muted mb-2">Store personal insights, heuristics, and solver notes in one place.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
