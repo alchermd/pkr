@@ -67,6 +67,7 @@ dtest:
 format:
 	uv format
 	uv tool run djlint src --reformat --format-css --format-js
+	cd src/frontend && npm run format
 
 i:
 	uv add $(pkg)
