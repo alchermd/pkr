@@ -3,10 +3,11 @@
 <html lang="en">
     <head>
         <title>Preflop RFI Range</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-              rel="stylesheet"
-              integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-              crossorigin="anonymous" />
+        <link rel="icon" href="{% static 'marketing/img/favicon.png' %}">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css" />
+        <link rel="stylesheet"
+              href="https://preview.tabler.io/dist/css/tabler-marketing.min.css" />
         <link rel="stylesheet" href="{% static 'ranges/css/ranges.css' %}" />
         {% if DEBUG %}
             <script type="module" src="{% static 'ranges/js/vite-react-refresh.js' %}"></script>
@@ -19,7 +20,6 @@
     <body class="py-5">
         <div id="root"></div>
         {{ initial_data|json_script:"initial-data" }}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/js/tabler.min.js"></script>
     </body>
 </html>
