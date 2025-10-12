@@ -1,4 +1,4 @@
-import {defineConfig} from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import fs from "fs";
@@ -9,7 +9,7 @@ function getEntries() {
   const entries = {};
 
   function walk(dir) {
-    const files = fs.readdirSync(dir, {withFileTypes: true});
+    const files = fs.readdirSync(dir, { withFileTypes: true });
     for (const file of files) {
       const fullPath = path.join(dir, file.name);
       if (file.isDirectory()) {
