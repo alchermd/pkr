@@ -12,6 +12,10 @@
 {% endblock %}
 {% block content %}
     {% include "ranges/_header.html" with pretitle="Range Trainer" title=initial_data.range_name %}
-    <div id="root"></div>
+    <div class="page-body">
+        <div class="container-xl">
+            <div id="root"></div>
+        </div>
+    </div>
     {{ initial_data|json_script:"initial-data" }}
 {% endblock %}

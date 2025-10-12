@@ -10,7 +10,8 @@ const POSITIONS_6MAX = [
   "BB",
 ];
 
-function PokerTable({ players = 6, defaultSpot = "BTN" }) {
+function PokerTable({ players = 6, selectedPosition = "BTN", onPositionClick, availablePositions }) {
+  console.log(selectedPosition);
   const containerRef = useRef(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
 
@@ -27,7 +28,7 @@ function PokerTable({ players = 6, defaultSpot = "BTN" }) {
     updateSize();
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
-  }, );
+  }, []);
 
   const { width, height } = size;
   const radiusX = width * 0.45;  // about 85% of width for the ellipse
@@ -35,7 +36,7 @@ function PokerTable({ players = 6, defaultSpot = "BTN" }) {
   const centerX = width / 2;
   const centerY = height / 2;
 
-  const spots = Array.from({ length: players }, (_, i) => {
+  const positions = Array.from({ length: players }, (_, i) => {
     const angle = (2 * Math.PI * i) / players - Math.PI / 2;
     const x = centerX + radiusX * Math.cos(angle);
     const y = centerY + radiusY * Math.sin(angle);
@@ -52,18 +53,24 @@ function PokerTable({ players = 6, defaultSpot = "BTN" }) {
         alt="Poker Table"
         className="poker-table-image"
       />
-      {spots.map((spot, i) => (
-        <div
-          key={spot.id}
-          className={`player-spot ${i === 0 ? "default-spot" : ""}`}
+      {positions.map((position, i) => {
+        const positionName = POSITIONS_6MAX[i];
+        const isPositionAvailable = availablePositions.includes(positionName);
+        const handleClick = isPositionAvailable ? () => onPositionClick(positionName) : () => alert("Position not available for this range.");
+
+        return <div
+          key={position.id}
+          className={`position ${positionName === selectedPosition ? "selected-position" : ""}`}
           style={{
-            left: `${spot.x - 15}px`,
-            top: `${spot.y - 15}px`,
+            left: `${position.x - 15}px`,
+            top: `${position.y - 15}px`,
+            cursor: isPositionAvailable ? "pointer" : "not-allowed",
           }}
+          onClick={handleClick}
         >
-          {POSITIONS_6MAX[i]}
+          {positionName}
         </div>
-      ))}
+      })}
     </div>
   );
 }
