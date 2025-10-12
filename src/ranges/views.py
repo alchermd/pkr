@@ -6,7 +6,7 @@ from core.range import load_range_from_csv, make_grid
 from ranges.models import PreFlopRange
 
 
-def ranges_view(request: HttpRequest, range_id: int) -> HttpResponse:
+def range_detail(request: HttpRequest, range_id: int) -> HttpResponse:
     preflop_range = get_object_or_404(PreFlopRange, id=range_id).to_domain()
 
     grids = [
@@ -24,4 +24,4 @@ def ranges_view(request: HttpRequest, range_id: int) -> HttpResponse:
             "range_name": preflop_range.name,
         }
     }
-    return render(request, "ranges/ranges.html", ctx)
+    return render(request, "ranges/range_detail.html", ctx)
