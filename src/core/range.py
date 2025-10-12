@@ -9,11 +9,12 @@ RANGE_FILES_DIR = Path(__file__).parent / "range_files"
 
 
 class PreFlopRange:
-    def __init__(self, name: str):
+    def __init__(self, name: str, description: str = ""):
         self.name = name
         # Dict[(position, hand)] -> action
         self.entries: Dict[Tuple[str, str], str] = {}
         self.positions: Set[str] = set()
+        self.description = description
 
     def set_action(self, position: str, hand: str, action: str):
         if position not in constants.POSITIONS:
@@ -65,6 +66,7 @@ def load_range(base_name: str) -> PreFlopRange:
 
     preflop_range = load_range_from_csv(csv_filename)
     preflop_range.name = meta["name"]
+    preflop_range.description = meta["description"]
     return preflop_range
 
 

@@ -5,11 +5,24 @@
     {% include "ranges/_header.html" with pretitle="Range Trainer" title="PreFlop Ranges" %}
     <div class="page-body">
         <div class="container-xl">
-            <ul>
-                {% for preflop_range in ranges %}
-                    <a href="{% url 'ranges:range_detail' range_id=preflop_range.id %}">{{ preflop_range.name }}</a>
-                {% endfor %}
-            </ul>
+            <div class="row"></div>
+            {% for preflop_range in ranges %}
+                <div class="col-md-6 col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ preflop_range.name }}</h3>
+                            <p class="text-secondary">{{ preflop_range.description }}</p>
+                        </div>
+                        <!-- Card footer -->
+                        <div class="card-footer">
+                            <div class="d-flex">
+                                <a href="{% url 'ranges:range_detail' range_id=preflop_range.id %}"
+                                   class="btn btn-primary ms-auto">Start</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
