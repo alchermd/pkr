@@ -6,6 +6,14 @@ from core.range import load_range_from_csv, make_grid
 from ranges.models import PreFlopRange
 
 
+def range_list(request: HttpRequest) -> HttpResponse:
+    ranges = PreFlopRange.objects.all()
+    ctx = {
+        "ranges": ranges,
+    }
+    return render(request, "ranges/range_list.html", ctx)
+
+
 def range_detail(request: HttpRequest, range_id: int) -> HttpResponse:
     preflop_range = get_object_or_404(PreFlopRange, id=range_id).to_domain()
 

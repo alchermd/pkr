@@ -1,0 +1,11 @@
+{% extends "ranges/_main.html" %}
+{% load static %}
+{% block title %}PreFlop Ranges{% endblock %}
+{% block content %}
+    <h1>Preflop Ranges</h1>
+    <ul>
+        {% for preflop_range in ranges %}
+            <a href="{% url 'ranges:range_detail' range_id=preflop_range.id %}">{{ preflop_range.name }}</a>
+        {% endfor %}
+    </ul>
+{% endblock %}

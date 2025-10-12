@@ -1,25 +1,16 @@
+{% extends "ranges/_main.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Preflop RFI Range</title>
-        <link rel="icon" href="{% static 'marketing/img/favicon.png' %}">
-        <link rel="stylesheet"
-              href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css" />
-        <link rel="stylesheet"
-              href="https://preview.tabler.io/dist/css/tabler-marketing.min.css" />
-        <link rel="stylesheet" href="{% static 'ranges/css/ranges.css' %}" />
-        {% if DEBUG %}
-            <script type="module" src="{% static 'ranges/js/vite-react-refresh.js' %}"></script>
-            <script type="module"
-                    src="http://localhost:5173/src/ranges/range-grid/main.jsx"></script>
-        {% else %}
-            <script type="module" src="{% static 'ranges/range-grid.js' %}"></script>
-        {% endif %}
-    </head>
-    <body class="py-5">
-        <div id="root"></div>
-        {{ initial_data|json_script:"initial-data" }}
-        <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/js/tabler.min.js"></script>
-    </body>
-</html>
+{% block title %}{{ initial_data.range_name }}{% endblock %}
+{% block react %}
+    {% if DEBUG %}
+        <script type="module" src="{% static 'ranges/js/vite-react-refresh.js' %}"></script>
+        <script type="module"
+                src="http://localhost:5173/src/ranges/range-grid/main.jsx"></script>
+    {% else %}
+        <script type="module" src="{% static 'ranges/range-grid.js' %}"></script>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div id="root"></div>
+    {{ initial_data|json_script:"initial-data" }}
+{% endblock %}
