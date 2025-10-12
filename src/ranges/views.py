@@ -31,6 +31,7 @@ def range_detail(request: HttpRequest, range_id: int) -> HttpResponse:
             "grids": grids,
             "range_name": preflop_range.name,
             "available_positions": list(preflop_range.positions),
+            "description": preflop_range.description,
         }
     }
     return render(request, "ranges/range_detail.html", ctx)

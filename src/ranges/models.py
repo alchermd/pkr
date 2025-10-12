@@ -38,6 +38,7 @@ class PreFlopRange(models.Model):
             tuple(key.split(",")): value for key, value in self.entries.items()
         }
         preflop_range.positions = set(self.positions)
+        preflop_range.description = self.description
         return preflop_range
 
     def __str__(self):

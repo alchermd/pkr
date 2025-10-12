@@ -7,7 +7,8 @@ function findGridByPosition(grids, position) {
 }
 
 export default function App({ initialData }) {
-  const { range_name, grids, available_positions } = initialData;
+  console.log(initialData);
+  const { description, grids, available_positions } = initialData;
   const [position, setPosition] = useState("BTN");
   const grid = findGridByPosition(grids, position);
 
@@ -18,6 +19,9 @@ export default function App({ initialData }) {
           <Grid position={position} grid={grid} />
         </div>
         <div className="col-md-4 offset-1">
+          <div className="mb-5">
+            <blockquote className="blockquote">{description}</blockquote>
+          </div>
           <PokerTable
             selectedPosition={position}
             onPositionClick={setPosition}

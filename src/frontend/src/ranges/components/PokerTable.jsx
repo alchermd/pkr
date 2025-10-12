@@ -9,7 +9,6 @@ function PokerTable({
   onPositionClick,
   availablePositions,
 }) {
-  console.log(selectedPosition);
   const containerRef = useRef(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
 
