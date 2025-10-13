@@ -1,0 +1,114 @@
+.cell {
+  width: 40px;
+  height: 40px;
+  line-height: 40px; /* vertical centering */
+  color: #fff;
+  flex: 1 1 auto;
+  aspect-ratio: 1 / 1; /* keeps it square */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.5rem, 1.2vw, 0.8rem);
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.cell-label {
+  pointer-events: none;
+}
+
+/* Scroll container */
+.range-grid-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+}
+
+/* Grid itself */
+.range-grid {
+  display: inline-block;
+  min-width: 500px; /* ensures it can scroll */
+}
+
+.action-open {
+  background-color: #4caf50;
+}
+
+.action-fold {
+  background-color: #ccc;
+  color: #000;
+}
+
+.action-call {
+  background-color: #2196f3;
+}
+
+.action-3bet {
+  background-color: #f44336;
+}
+
+.action-check {
+  background-color: #ff9800;
+}
+
+.legend-box {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #444;
+  border-radius: 50px;
+}
+
+@media (max-width: 600px) {
+  .grid-wrapper {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+/* Scroll container */
+.range-grid-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+}
+
+/* Grid itself */
+.range-grid {
+  display: inline-block;
+  min-width: 500px; /* ensures it can scroll */
+}
+
+.grid-row {
+  display: flex;
+}
+
+.cell {
+  flex: 1 1 auto;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.cell-label {
+  pointer-events: none;
+}
+
+.action-fold {
+  background-color: #f44336;
+  color: white;
+}
+
+.action-call {
+  background-color: #ff9800;
+  color: white;
+}
+
+.action-raise {
+  background-color: #4caf50;
+  color: white;
+}

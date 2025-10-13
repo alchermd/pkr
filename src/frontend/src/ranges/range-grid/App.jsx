@@ -15,10 +15,10 @@ export default function App({ initialData }) {
   return (
     <div className="mt-5">
       <div className="row">
-        <div className="col-md-4 offset-1 d-flex flex-column align-items-center text-center mb-5">
+        <div className="col-md-4 offset-md-1 d-flex flex-column align-items-center text-center mb-5">
           <Grid position={position} grid={grid} />
         </div>
-        <div className="col-md-4 offset-1">
+        <div className="col-md-4 offset-md-1">
           <div className="mb-5">
             <blockquote className="blockquote">{description}</blockquote>
           </div>
