@@ -10,21 +10,35 @@ function PokerTable({
   availablePositions,
 }) {
   const containerRef = useRef(null);
-  const [size, setSize] = useState({ width: 0, height: 0 });
+  const imgRef = useRef(null);
 
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  const updateSize = () => {
+    if (containerRef.current) {
+      setSize({
+        width: containerRef.current.offsetWidth,
+        height: containerRef.current.offsetHeight,
+      });
+    }
+  };
   // Track live container size (for responsiveness)
   useEffect(() => {
-    const updateSize = () => {
-      if (containerRef.current) {
-        setSize({
-          width: containerRef.current.offsetWidth,
-          height: containerRef.current.offsetHeight,
-        });
-      }
-    };
     updateSize();
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+
+    if (img.complete) {
+      // already cached
+      updateSize();
+    } else {
+      img.addEventListener("load", updateSize);
+      return () => img.removeEventListener("load", updateSize);
+    }
   }, []);
 
   const { width, height } = size;
@@ -43,6 +57,7 @@ function PokerTable({
   return (
     <div ref={containerRef} className="poker-table-container">
       <img
+        ref={imgRef}
         src="/static/ranges/img/table.png"
         alt="Poker Table"
         className="poker-table-image"
