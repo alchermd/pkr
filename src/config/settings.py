@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "ranges.apps.RangesConfig",
     "marketing.apps.MarketingConfig",
+    "core",
 ]
 
 MIDDLEWARE = [

@@ -59,7 +59,7 @@ createsuperuser:
 	$(DJ) createsuperuser
 
 test:
-	$(DJ) test
+	$(DJ) test --pattern="*_tests.py"
 
 dtest:
 	bash ./tests/docker-test.sh
