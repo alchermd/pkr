@@ -7,8 +7,8 @@ function findGridByPosition(grids, position) {
 }
 
 export default function App({ initialData }) {
-  console.log(initialData);
-  const { description, grids, available_positions } = initialData;
+  const { description, grids, available_positions, quiz_mode_url } =
+    initialData;
   const [position, setPosition] = useState("BTN");
   const grid = findGridByPosition(grids, position);
 
@@ -27,6 +27,11 @@ export default function App({ initialData }) {
             onPositionClick={setPosition}
             availablePositions={available_positions}
           />
+          <div className="d-flex align-items-center justify-content-center mt-5">
+            <a href={quiz_mode_url} className="btn btn-primary btn-block">
+              Quiz Mode
+            </a>
+          </div>
         </div>
       </div>
     </div>
