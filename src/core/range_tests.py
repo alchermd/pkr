@@ -1,6 +1,7 @@
 from unittest import TestCase
+from unittest.mock import patch, mock_open
 
-from core.range import PreFlopRange
+from core.range import PreFlopRange, load_range_from_csv
 
 
 class TestPreFlopRange(TestCase):
@@ -61,3 +62,18 @@ class TestPreFlopRange(TestCase):
 
         # Then the action defaults to "fold"
         assert "fold" == action
+
+
+class TestRangeUtilities(TestCase):
+    def test_can_load_range_from_csv(self):
+        # Given a csv range file
+        csv_content = "pos,hand,action\nBTN,AKs,open\nCO,AQo,call\n"
+
+        # When loading the range file
+        with patch("builtins.open", mock_open(read_data=csv_content)):
+            pfr = load_range_from_csv("dummy.csv", name="Test Range")
+
+        # Then the range instance created contains the expected actions
+        self.assertEqual("open", pfr.get_action("BTN", "AKs"))
+        self.assertEqual("call", pfr.get_action("CO", "AQo"))
+        self.assertEqual("fold", pfr.get_action("UTG", "22"))
