@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch, mock_open
 
-from core.range import PreFlopRange, load_range_from_csv
+from core.range import PreFlopRange, load_range_from_csv, load_range
 
 
 class TestPreFlopRange(TestCase):
@@ -77,3 +77,47 @@ class TestRangeUtilities(TestCase):
         self.assertEqual("open", pfr.get_action("BTN", "AKs"))
         self.assertEqual("call", pfr.get_action("CO", "AQo"))
         self.assertEqual("fold", pfr.get_action("UTG", "22"))
+
+    @patch("pathlib.Path.exists")
+    @patch("builtins.open")
+    def test_can_load_range_by_name(self, mock_open_func, mock_exists):
+        # Given a range file and an accompanying metadata file
+        mock_exists.return_value = True
+        mock_json = '{"name": "Test Range", "description": "A test range"}'
+        mock_csv = "pos,hand,action\nBTN,AKs,open\n"
+        mock_open_func.side_effect = [
+            mock_open(read_data=mock_json)(),
+            mock_open(read_data=mock_csv)(),
+        ]
+
+        # When the range is loaded by name
+        pfr = load_range("test_range")
+
+        # Then the range instance created contains the expected metadata and actions
+        self.assertEqual("Test Range", pfr.name)
+        self.assertEqual("A test range", pfr.description)
+        self.assertEqual("open", pfr.get_action("BTN", "AKs"))
+
+    @patch("pathlib.Path.exists")
+    def test_can_handle_missing_metadata_when_loading_range_by_filename(
+        self, mock_exists
+    ):
+        # Given no metadata file exists
+        mock_exists.return_value = False
+
+        # When loading the range by name
+        # Then a FileNotFoundError is raised
+        with self.assertRaises(FileNotFoundError) as context:
+            load_range("missing_range")
+
+    @patch("pathlib.Path.exists")
+    def test_load_range_missing_csv(self, mock_exists):
+        # Given a metadata file exists but no CSV file
+        mock_exists.side_effect = [True, False]
+        mock_json = '{"name": "Test Range", "description": "A test range"}'
+
+        # When loading the range by name
+        # Then a FileNotFoundError is raised
+        with patch("builtins.open", mock_open(read_data=mock_json)):
+            with self.assertRaises(FileNotFoundError) as context:
+                load_range("incomplete_range")
