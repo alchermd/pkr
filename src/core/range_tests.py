@@ -123,3 +123,43 @@ class TestLoadRange:
         with patch("builtins.open", mock_open(read_data=mock_json)):
             with pytest.raises(FileNotFoundError):
                 load_range("incomplete_range")
+
+
+class TestMakeGrid:
+    def test_grid_dimension_and_labels(self):
+        # Given a PreFlopRange with some actions set
+        pfr = PreFlopRange("test-range")
+        pfr.set_action("BTN", "AKs", "open")
+        pfr.set_action("BTN", "TT", "open")
+        pfr.set_action("BTN", "76o", "call")
+
+        # When building the grid for BTN
+        grid = make_grid(pfr, "BTN")
+
+        # Then the grid is 13x13
+        assert len(grid) == 13
+        assert all(len(row) == 13 for row in grid)
+
+        # And the cell labels are correct
+        assert grid[0][1]["label"] == "AKs"
+        assert grid[8][8]["label"] == "66"
+        assert grid[6][5]["label"] == "98o"
+
+    def test_grid_actions(self):
+        # Given a PreFlopRange with specific actions
+        pfr = PreFlopRange("test-range")
+        pfr.set_action("BTN", "AKs", "open")
+        pfr.set_action("BTN", "TT", "open")
+        pfr.set_action("BTN", "76o", "call")
+
+        # When building the grid for BTN
+        grid = make_grid(pfr, "BTN")
+
+        # Then the actions are set as expected
+        assert grid[0][1]["action"] == "open"
+        assert grid[4][4]["action"] == "open"
+        assert grid[8][7]["action"] == "call"
+
+        # And unset hands default to "fold"
+        assert grid[0][0]["action"] == "fold"  # AA
+        assert grid[12][12]["action"] == "fold"  # 22
