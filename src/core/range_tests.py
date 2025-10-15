@@ -74,9 +74,9 @@ class TestRangeUtilities(TestCase):
             pfr = load_range_from_csv("dummy.csv", name="Test Range")
 
         # Then the range instance created contains the expected actions
-        self.assertEqual("open", pfr.get_action("BTN", "AKs"))
-        self.assertEqual("call", pfr.get_action("CO", "AQo"))
-        self.assertEqual("fold", pfr.get_action("UTG", "22"))
+        assert "open" == pfr.get_action("BTN", "AKs")
+        assert "call" == pfr.get_action("CO", "AQo")
+        assert "fold" == pfr.get_action("UTG", "22")
 
     @patch("pathlib.Path.exists")
     @patch("builtins.open")
@@ -94,9 +94,9 @@ class TestRangeUtilities(TestCase):
         pfr = load_range("test_range")
 
         # Then the range instance created contains the expected metadata and actions
-        self.assertEqual("Test Range", pfr.name)
-        self.assertEqual("A test range", pfr.description)
-        self.assertEqual("open", pfr.get_action("BTN", "AKs"))
+        assert "Test Range" == pfr.name
+        assert "A test range" == pfr.description
+        assert "open" == pfr.get_action("BTN", "AKs")
 
     @patch("pathlib.Path.exists")
     def test_can_handle_missing_metadata_when_loading_range_by_filename(
@@ -107,7 +107,7 @@ class TestRangeUtilities(TestCase):
 
         # When loading the range by name
         # Then a FileNotFoundError is raised
-        with self.assertRaises(FileNotFoundError) as context:
+        with self.assertRaises(FileNotFoundError):
             load_range("missing_range")
 
     @patch("pathlib.Path.exists")
@@ -119,5 +119,5 @@ class TestRangeUtilities(TestCase):
         # When loading the range by name
         # Then a FileNotFoundError is raised
         with patch("builtins.open", mock_open(read_data=mock_json)):
-            with self.assertRaises(FileNotFoundError) as context:
+            with self.assertRaises(FileNotFoundError):
                 load_range("incomplete_range")
