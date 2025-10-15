@@ -1,10 +1,10 @@
-from unittest import TestCase
+import pytest
 from unittest.mock import patch, mock_open
 
-from core.range import PreFlopRange, load_range_from_csv, load_range
+from core.range import PreFlopRange, load_range_from_csv, load_range, make_grid
 
 
-class TestPreFlopRange(TestCase):
+class TestPreFlopRange:
     def test_can_set_and_get_actions(self):
         # Given a range
         pfr = PreFlopRange("test-range")
@@ -32,7 +32,7 @@ class TestPreFlopRange(TestCase):
 
         # When an invalid position is set
         # Then a ValueError is raised
-        with self.assertRaises(ValueError):
+        with pytest.raises(ValueError):
             pfr.set_action("INVALID_POS", "AKs", "open")
 
     def test_checks_for_invalid_hands(self):
@@ -41,7 +41,7 @@ class TestPreFlopRange(TestCase):
 
         # When an invalid hand is set
         # Then a ValueError is raised
-        with self.assertRaises(ValueError):
+        with pytest.raises(ValueError):
             pfr.set_action("BTN", "INVALID_HAND", "open")
 
     def test_checks_for_invalid_actions(self):
@@ -50,7 +50,7 @@ class TestPreFlopRange(TestCase):
 
         # When an invalid action is set
         # Then a ValueError is raised
-        with self.assertRaises(ValueError):
+        with pytest.raises(ValueError):
             pfr.set_action("BTN", "AKs", "INVALID_ACTION")
 
     def test_defaults_to_fold_for_unset_entries(self):
@@ -64,7 +64,7 @@ class TestPreFlopRange(TestCase):
         assert "fold" == action
 
 
-class TestRangeUtilities(TestCase):
+class TestLoadRangeFromCSV:
     def test_can_load_range_from_csv(self):
         # Given a csv range file
         csv_content = "pos,hand,action\nBTN,AKs,open\nCO,AQo,call\n"
@@ -78,6 +78,8 @@ class TestRangeUtilities(TestCase):
         assert "call" == pfr.get_action("CO", "AQo")
         assert "fold" == pfr.get_action("UTG", "22")
 
+
+class TestLoadRange:
     @patch("pathlib.Path.exists")
     @patch("builtins.open")
     def test_can_load_range_by_name(self, mock_open_func, mock_exists):
@@ -107,7 +109,7 @@ class TestRangeUtilities(TestCase):
 
         # When loading the range by name
         # Then a FileNotFoundError is raised
-        with self.assertRaises(FileNotFoundError):
+        with pytest.raises(FileNotFoundError):
             load_range("missing_range")
 
     @patch("pathlib.Path.exists")
@@ -119,5 +121,5 @@ class TestRangeUtilities(TestCase):
         # When loading the range by name
         # Then a FileNotFoundError is raised
         with patch("builtins.open", mock_open(read_data=mock_json)):
-            with self.assertRaises(FileNotFoundError):
+            with pytest.raises(FileNotFoundError):
                 load_range("incomplete_range")
