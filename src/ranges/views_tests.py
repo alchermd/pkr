@@ -23,3 +23,15 @@ class TestRangeDetailView:
     def test_404_for_invalid_id(self, client: Client):
         response = client.get(reverse("ranges:range_detail", args=[42]))
         assert 404 == response.status_code
+
+
+@pytest.mark.django_db
+class TestRangeDetailView:
+    def test_renders_expected_template(self, client: Client):
+        pfr = PreFlopRange.objects.create(name="Test Range", description="A test range")
+        response = client.get(reverse("ranges:range_quiz", args=[pfr.id]))
+        assertTemplateUsed(response, "ranges/range_quiz.html")
+
+    def test_404_for_invalid_id(self, client: Client):
+        response = client.get(reverse("ranges:range_quiz", args=[42]))
+        assert 404 == response.status_code
