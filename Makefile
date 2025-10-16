@@ -60,6 +60,7 @@ createsuperuser:
 
 test:
 	cd src && $(UVR) pytest
+	cd src/frontend && npm run test -- --watch=false
 
 dtest:
 	bash ./tests/docker-test.sh
