@@ -1,7 +1,7 @@
 import csv
 import json
 from pathlib import Path
-from typing import Dict, Tuple, List, Set
+from typing import Dict, List, Set, Tuple
 
 from core import constants
 

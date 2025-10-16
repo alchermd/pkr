@@ -1,5 +1,7 @@
-from django.core.management import BaseCommand
 import os
+
+from django.core.management import BaseCommand
+
 from core.range import RANGE_FILES_DIR, load_range
 from ranges.models import PreFlopRange
 

@@ -1,7 +1,8 @@
-import pytest
-from unittest.mock import patch, mock_open
+from unittest.mock import mock_open, patch
 
-from core.range import PreFlopRange, load_range_from_csv, load_range, make_grid
+import pytest
+
+from core.range import PreFlopRange, load_range, load_range_from_csv, make_grid
 
 
 class TestPreFlopRange:

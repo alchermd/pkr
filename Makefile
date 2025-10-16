@@ -65,7 +65,8 @@ dtest:
 	bash ./tests/docker-test.sh
 
 format:
-	uv format
+	uv tool run ruff check --select I --fix
+	uv tool run ruff format
 	uv tool run djlint src --reformat --format-css --format-js
 	cd src/frontend && npm run format
 
