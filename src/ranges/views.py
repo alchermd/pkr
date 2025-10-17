@@ -35,6 +35,10 @@ def range_quiz(request: HttpRequest, range_id: int) -> HttpResponse:
 def get_range_details(range_id: int) -> dict:
     preflop_range = get_object_or_404(PreFlopRange, id=range_id).to_domain()
 
+    # Example: [
+    #  ('UTG', [{'action': 'open', 'label': 'AA'}, {'action': 'fold', 'label': '72o'}]),
+    #  ('MP', [{...}, {...}]),
+    # ]
     grids = [
         (pos, make_grid(preflop_range, pos))
         for pos in sorted(
