@@ -27,21 +27,29 @@ function App({ initialData }) {
             <button
               className="btn btn-danger mx-2"
               onClick={() => setUserAnswer("fold")}
+              disabled={showAnswer}
             >
               Fold
             </button>
             <button
               className="btn btn-primary"
               onClick={() => setUserAnswer("open")}
+              disabled={showAnswer}
             >
               Open
             </button>
           </div>
 
           {showAnswer && (
-            <div>
-              <p>Answer: {scenario.answer}</p>
-              <p>{answerIsCorrect ? "Good job!" : "Incorrect"}</p>
+            <div className="mt-5">
+              <p className="">
+                You selected <strong>{userAnswer}</strong>
+              </p>
+              {answerIsCorrect ? (
+                <p className="text-success">Correct, good job!</p>
+              ) : (
+                <p className="text-danger">Incorrect, try again.</p>
+              )}
             </div>
           )}
         </>
