@@ -1,13 +1,52 @@
+import { useEffect, useState } from "react";
+
 function App({ initialData }) {
   const { grids, available_positions } = initialData;
-  const scenario = randomScenario(grids, available_positions);
+  const [scenario, setScenario] = useState(null);
+  const [userAnswer, setUserAnswer] = useState(null);
+  const showAnswer = userAnswer !== null;
+  const answerIsCorrect = userAnswer === scenario?.answer;
+
+  useEffect(() => {
+    if (scenario === null) {
+      setScenario(randomScenario(grids, available_positions));
+    }
+  }, []);
+
   return (
-    <p>
-      You were dealt {scenario.dealtCard} from {scenario.position}. What is your
-      action?
-      <br />
-      Answer: {scenario.answer}
-    </p>
+    <div className="mt-5">
+      {scenario && (
+        <>
+          <p>
+            You were dealt {scenario.dealtCard} from {scenario.position}. What
+            is your action?
+          </p>
+
+          <div>
+            {/* These options should've been generated somewhere and not hardcoded */}
+            <button
+              className="btn btn-danger mx-2"
+              onClick={() => setUserAnswer("fold")}
+            >
+              Fold
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => setUserAnswer("open")}
+            >
+              Open
+            </button>
+          </div>
+
+          {showAnswer && (
+            <div>
+              <p>Answer: {scenario.answer}</p>
+              <p>{answerIsCorrect ? "Good job!" : "Incorrect"}</p>
+            </div>
+          )}
+        </>
+      )}
+    </div>
   );
 }
 
