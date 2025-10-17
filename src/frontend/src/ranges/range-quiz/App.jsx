@@ -13,6 +13,11 @@ function App({ initialData }) {
     }
   }, []);
 
+  function handleNext() {
+    setScenario(randomScenario(grids, available_positions));
+    setUserAnswer(null);
+  }
+
   return (
     <div className="mt-5">
       {scenario && (
@@ -50,6 +55,9 @@ function App({ initialData }) {
               ) : (
                 <p className="text-danger">Incorrect, try again.</p>
               )}
+              <button className="btn btn-secondary mt-3" onClick={handleNext}>
+                Next
+              </button>
             </div>
           )}
         </>
