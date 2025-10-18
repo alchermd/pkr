@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import QuizControls from "./QuizControls";
 import Question from "./Question";
 import Answer from "./Answer";
+import QuizStats from "./QuizStats";
 
 function Quiz({ grids, available_positions }) {
   const [scenario, setScenario] = useState(null);
   const [userAnswer, setUserAnswer] = useState(null);
   const showAnswer = userAnswer !== null;
   const answerIsCorrect = userAnswer === scenario?.answer;
+
+  // Quiz stats
+  const [attempts, setAttempts] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
 
   // Feedback class for the card based on the user's answer
   const [feedbackClass, setFeedbackClass] = useState("");
@@ -25,12 +30,19 @@ function Quiz({ grids, available_positions }) {
   }
 
   // Set the user's answer and add feedback classes to the card.
+  // Also manages quiz stats.
   function handleAnswer(answer) {
     setUserAnswer(answer);
-    const newFeedbackClass =
-      answer === scenario.answer
-        ? "border-success border-2"
-        : "border-danger border-2";
+    const answerIsCorrect = answer === scenario.answer;
+
+    // Quiz stats
+    setAttempts((prev) => prev + 1);
+    setCorrectAnswers((prev) => (answerIsCorrect ? prev + 1 : prev));
+
+    // UI feedback
+    const newFeedbackClass = answerIsCorrect
+      ? "border-success border-2"
+      : "border-danger border-2";
     setFeedbackClass(newFeedbackClass);
     setDisableActions(true);
     setTimeout(() => {
@@ -65,6 +77,8 @@ function Quiz({ grids, available_positions }) {
               />
             </div>
           </div>
+
+          <QuizStats correctAnswers={correctAnswers} attempts={attempts} />
         </div>
       </div>
     </div>
