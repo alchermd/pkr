@@ -57,7 +57,7 @@ function App({ initialData }) {
 
                   {showAnswer ? (
                     <button
-                      className="btn btn-secondary btn-lg w-100"
+                      className="btn btn-secondary btn-lg w-100 flex"
                       onClick={handleNext}
                     >
                       Next
@@ -65,13 +65,13 @@ function App({ initialData }) {
                   ) : (
                     <>
                       <button
-                        className="btn btn-lg btn-danger"
+                        className="btn btn-lg btn-danger w-100"
                         onClick={() => setUserAnswer("fold")}
                       >
                         Fold
                       </button>
                       <button
-                        className="btn btn-lg btn-primary"
+                        className="btn btn-lg btn-primary w-100"
                         onClick={() => setUserAnswer("open")}
                       >
                         Open
