@@ -32,44 +32,52 @@ function App({ initialData }) {
                       {scenario.position}. What is your action?
                     </p>
 
-                    {showAnswer && (
-                      <div className="mt-5">
+                    <div style={{ minHeight: "50px", height: "50px" }}>
+                      {showAnswer && (
                         <p className="">
-                          You selected <strong>{userAnswer}</strong>
+                          You selected <strong>{userAnswer}</strong>.{" "}
+                          {answerIsCorrect ? (
+                            <span className="text-success">
+                              Correct, good job!
+                            </span>
+                          ) : (
+                            <span className="text-danger">
+                              Incorrect, try again.
+                            </span>
+                          )}
                         </p>
-                        {answerIsCorrect ? (
-                          <p className="text-success">Correct, good job!</p>
-                        ) : (
-                          <p className="text-danger">Incorrect, try again.</p>
-                        )}
-                        <button
-                          className="btn btn-secondary mt-3"
-                          onClick={handleNext}
-                        >
-                          Next
-                        </button>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </>
                 )}
               </div>
               <div className="card-footer">
                 <div className="d-flex align-content-center justify-content-center gap-3">
                   {/* These options should've been generated somewhere and not hardcoded */}
-                  <button
-                    className="btn btn-lg btn-danger"
-                    onClick={() => setUserAnswer("fold")}
-                    disabled={showAnswer}
-                  >
-                    Fold
-                  </button>
-                  <button
-                    className="btn btn-lg btn-primary"
-                    onClick={() => setUserAnswer("open")}
-                    disabled={showAnswer}
-                  >
-                    Open
-                  </button>
+
+                  {showAnswer ? (
+                    <button
+                      className="btn btn-secondary btn-lg w-100"
+                      onClick={handleNext}
+                    >
+                      Next
+                    </button>
+                  ) : (
+                    <>
+                      <button
+                        className="btn btn-lg btn-danger"
+                        onClick={() => setUserAnswer("fold")}
+                      >
+                        Fold
+                      </button>
+                      <button
+                        className="btn btn-lg btn-primary"
+                        onClick={() => setUserAnswer("open")}
+                      >
+                        Open
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
