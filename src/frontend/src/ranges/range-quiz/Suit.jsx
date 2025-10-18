@@ -3,9 +3,9 @@ function Suit({ suit }) {
     case "H":
       return <span className="text-danger">&hearts;</span>;
     case "D":
-      return <span className="text-danger">&diams;</span>;
+      return <span className="text-primary">&diams;</span>;
     case "C":
-      return <span>&clubs;</span>;
+      return <span className="text-success">&clubs;</span>;
     case "S":
       return <span>&spades;</span>;
     default:
