@@ -10,7 +10,7 @@ function QuizCards({ cards }) {
     const suits = generateSuits(cards);
     setCard1Suit(suits[0]);
     setCard2Suit(suits[1]);
-  }, []);
+  }, [cards]);
 
   return (
     <div className="d-flex align-items-center justify-content-center gap-3">
