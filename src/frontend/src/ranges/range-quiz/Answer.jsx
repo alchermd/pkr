@@ -2,7 +2,7 @@ import "./Answer.css";
 
 function Answer({ answer, showAnswer, answerIsCorrect }) {
   return (
-    <div className="answer">
+    <div className="answer text-center">
       {showAnswer && (
         <p>
           You selected <strong>{answer}</strong>.{" "}

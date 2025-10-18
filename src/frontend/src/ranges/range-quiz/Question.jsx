@@ -2,16 +2,30 @@ import QuizCards from "./QuizCards";
 
 function Question({ scenario }) {
   return (
-    <div>
-      <p>You are {scenario.position}</p>
+    <div className="text-center py-5">
       <QuizCards cards={scenario.dealtCard} />
-      <p>What do you do?</p>
-      {/*<p className="lead">*/}
-      {/*  You were dealt {scenario.dealtCard} from {scenario.position}. What is your*/}
-      {/*  action?*/}
-      {/*</p>*/}
+      <p className="mt-4 h2">
+        {verbosePositionName(scenario.position)} ({scenario.position})
+      </p>
+      <p className="mt-4">
+        You are dealt <strong>{scenario.dealtCard}</strong> in the{" "}
+        <strong>{scenario.position}</strong> position.
+      </p>
+      <p className="mt-4">What action do you choose?</p>
     </div>
   );
+}
+
+function verbosePositionName(position) {
+  const positionNames = {
+    UTG: "Under the Gun",
+    HJ: "Hijack",
+    CO: "Cutoff",
+    BTN: "Button",
+    SB: "Small Blind",
+    BB: "Big Blind",
+  };
+  return positionNames[position] || position;
 }
 
 export default Question;
