@@ -20,48 +20,62 @@ function App({ initialData }) {
 
   return (
     <div className="mt-5">
-      {scenario && (
-        <>
-          <p>
-            You were dealt {scenario.dealtCard} from {scenario.position}. What
-            is your action?
-          </p>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-8 offset-md-1 col-lg-6 offset-lg-3">
+            <div className="card">
+              <div className="card-body">
+                {scenario && (
+                  <>
+                    <p className="lead">
+                      You were dealt {scenario.dealtCard} from{" "}
+                      {scenario.position}. What is your action?
+                    </p>
 
-          <div>
-            {/* These options should've been generated somewhere and not hardcoded */}
-            <button
-              className="btn btn-danger mx-2"
-              onClick={() => setUserAnswer("fold")}
-              disabled={showAnswer}
-            >
-              Fold
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => setUserAnswer("open")}
-              disabled={showAnswer}
-            >
-              Open
-            </button>
-          </div>
-
-          {showAnswer && (
-            <div className="mt-5">
-              <p className="">
-                You selected <strong>{userAnswer}</strong>
-              </p>
-              {answerIsCorrect ? (
-                <p className="text-success">Correct, good job!</p>
-              ) : (
-                <p className="text-danger">Incorrect, try again.</p>
-              )}
-              <button className="btn btn-secondary mt-3" onClick={handleNext}>
-                Next
-              </button>
+                    {showAnswer && (
+                      <div className="mt-5">
+                        <p className="">
+                          You selected <strong>{userAnswer}</strong>
+                        </p>
+                        {answerIsCorrect ? (
+                          <p className="text-success">Correct, good job!</p>
+                        ) : (
+                          <p className="text-danger">Incorrect, try again.</p>
+                        )}
+                        <button
+                          className="btn btn-secondary mt-3"
+                          onClick={handleNext}
+                        >
+                          Next
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+              <div className="card-footer">
+                <div className="d-flex align-content-center justify-content-center gap-3">
+                  {/* These options should've been generated somewhere and not hardcoded */}
+                  <button
+                    className="btn btn-lg btn-danger"
+                    onClick={() => setUserAnswer("fold")}
+                    disabled={showAnswer}
+                  >
+                    Fold
+                  </button>
+                  <button
+                    className="btn btn-lg btn-primary"
+                    onClick={() => setUserAnswer("open")}
+                    disabled={showAnswer}
+                  >
+                    Open
+                  </button>
+                </div>
+              </div>
             </div>
-          )}
-        </>
-      )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
