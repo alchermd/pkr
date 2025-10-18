@@ -9,6 +9,10 @@ function Quiz({ grids, available_positions }) {
   const showAnswer = userAnswer !== null;
   const answerIsCorrect = userAnswer === scenario?.answer;
 
+  // Feedback class for the card based on the user's answer
+  const [feedbackClass, setFeedbackClass] = useState("");
+  const [disableActions, setDisableActions] = useState(false);
+
   useEffect(() => {
     if (scenario === null) {
       setScenario(randomScenario(grids, available_positions));
@@ -20,11 +24,26 @@ function Quiz({ grids, available_positions }) {
     setUserAnswer(null);
   }
 
+  // Set the user's answer and add feedback classes to the card.
+  function handleAnswer(answer) {
+    setUserAnswer(answer);
+    const newFeedbackClass =
+      answer === scenario.answer
+        ? "border-success border-2"
+        : "border-danger border-2";
+    setFeedbackClass(newFeedbackClass);
+    setDisableActions(true);
+    setTimeout(() => {
+      setFeedbackClass("");
+      setDisableActions(false);
+    }, 750);
+  }
+
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-8 offset-md-1 col-lg-6 offset-lg-3">
-          <div className="card">
+          <div className={`card ${feedbackClass}`}>
             <div className="card-body">
               {scenario && (
                 <>
@@ -39,8 +58,9 @@ function Quiz({ grids, available_positions }) {
             </div>
             <div className="card-footer">
               <QuizControls
+                disableActions={disableActions}
                 showAnswer={showAnswer}
-                handleAnswer={setUserAnswer}
+                handleAnswer={handleAnswer}
                 handleNext={handleNext}
               />
             </div>
