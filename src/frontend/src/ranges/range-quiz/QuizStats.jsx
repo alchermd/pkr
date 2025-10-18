@@ -1,6 +1,9 @@
-function QuizStats({ correctAnswers, attempts }) {
+function QuizStats({ attempts }) {
+  const correctAnswers = attempts.filter((a) => a.answerIsCorrect).length;
   const accuracy =
-    attempts > 0 ? ((correctAnswers / attempts) * 100).toFixed(2) + "%" : "N/A";
+    attempts.length > 0
+      ? ((correctAnswers / attempts.length) * 100).toFixed(2) + "%"
+      : "N/A";
   return (
     <div className="card mt-5">
       <div className="card-header">
@@ -11,7 +14,7 @@ function QuizStats({ correctAnswers, attempts }) {
           <div className="datagrid-item">
             <div className="datagrid-title">Attempts</div>
             <div className="datagrid-content">
-              {correctAnswers} / {attempts}{" "}
+              {correctAnswers} / {attempts.length}{" "}
             </div>
           </div>
           <div className="datagrid-item">

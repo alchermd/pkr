@@ -11,8 +11,7 @@ function Quiz({ grids, available_positions }) {
   const answerIsCorrect = userAnswer === scenario?.answer;
 
   // Quiz stats
-  const [attempts, setAttempts] = useState(0);
-  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [attempts, setAttempts] = useState([]);
 
   // Feedback class for the card based on the user's answer
   const [feedbackClass, setFeedbackClass] = useState("");
@@ -36,8 +35,7 @@ function Quiz({ grids, available_positions }) {
     const answerIsCorrect = answer === scenario.answer;
 
     // Quiz stats
-    setAttempts((prev) => prev + 1);
-    setCorrectAnswers((prev) => (answerIsCorrect ? prev + 1 : prev));
+    setAttempts((prev) => [...prev, { answerIsCorrect, scenario }]);
 
     // UI feedback
     const newFeedbackClass = answerIsCorrect
@@ -78,7 +76,7 @@ function Quiz({ grids, available_positions }) {
             </div>
           </div>
 
-          <QuizStats correctAnswers={correctAnswers} attempts={attempts} />
+          <QuizStats attempts={attempts} />
         </div>
       </div>
     </div>
