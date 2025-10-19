@@ -11,6 +11,7 @@ function Quiz({ grids, available_positions }) {
   const [userAnswer, setUserAnswer] = useState(null);
   const showAnswer = userAnswer !== null;
   const answerIsCorrect = userAnswer === scenario?.answer;
+  const selectedGrid = grids.find((grid) => grid[0] === scenario?.position);
 
   // Quiz settings
   const [autoNext, setAutoNext] = useState(false);
@@ -82,6 +83,7 @@ function Quiz({ grids, available_positions }) {
                       answer={userAnswer}
                       showAnswer={showAnswer}
                       answerIsCorrect={answerIsCorrect}
+                      answerGrid={selectedGrid}
                     />
                   </>
                 )}

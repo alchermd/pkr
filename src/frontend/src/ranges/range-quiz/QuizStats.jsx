@@ -179,7 +179,6 @@ function getAccuracyByPosition(attempts) {
   };
 }
 function AccuracyList({ accuracyData }) {
-  console.log(accuracyData);
   const {
     byPosition,
     bestPosition,
