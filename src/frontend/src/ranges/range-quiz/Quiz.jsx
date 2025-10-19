@@ -4,6 +4,8 @@ import Question from "./Question";
 import Answer from "./Answer";
 import QuizStats from "./QuizStats";
 
+const HANDS_PER_SESSION = 20;
+
 function Quiz({ grids, available_positions }) {
   const [scenario, setScenario] = useState(null);
   const [userAnswer, setUserAnswer] = useState(null);
@@ -15,6 +17,7 @@ function Quiz({ grids, available_positions }) {
 
   // Quiz stats
   const [attempts, setAttempts] = useState([]);
+  const sessionIsOver = attempts.length >= HANDS_PER_SESSION;
 
   // Feedback class for the card based on the user's answer
   const [feedbackClass, setFeedbackClass] = useState("");
@@ -59,40 +62,42 @@ function Quiz({ grids, available_positions }) {
     <div className="container">
       <div className="row">
         <div className="col-md-8 offset-md-1 col-lg-6 offset-lg-3">
-          <div className={`card ${feedbackClass}`}>
-            <div className="card-body">
-              <label className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={autoNext}
-                  onChange={(e) => setAutoNext(e.target.checked)}
-                />
-                <span className="form-check-label">Auto-next</span>
-              </label>
-
-              {scenario && (
-                <>
-                  <Question scenario={scenario} />
-                  <Answer
-                    answer={userAnswer}
-                    showAnswer={showAnswer}
-                    answerIsCorrect={answerIsCorrect}
+          {sessionIsOver ? null : (
+            <div className={`card ${feedbackClass}`}>
+              <div className="card-body">
+                <label className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={autoNext}
+                    onChange={(e) => setAutoNext(e.target.checked)}
                   />
-                </>
-              )}
-            </div>
-            <div className="card-footer">
-              <QuizControls
-                disableActions={disableActions}
-                showAnswer={showAnswer}
-                handleAnswer={handleAnswer}
-                handleNext={handleNext}
-              />
-            </div>
-          </div>
+                  <span className="form-check-label">Auto-next</span>
+                </label>
 
-          <QuizStats attempts={attempts} />
+                {scenario && (
+                  <>
+                    <Question scenario={scenario} />
+                    <Answer
+                      answer={userAnswer}
+                      showAnswer={showAnswer}
+                      answerIsCorrect={answerIsCorrect}
+                    />
+                  </>
+                )}
+              </div>
+              <div className="card-footer">
+                <QuizControls
+                  disableActions={disableActions}
+                  showAnswer={showAnswer}
+                  handleAnswer={handleAnswer}
+                  handleNext={handleNext}
+                />
+              </div>
+            </div>
+          )}
+
+          <QuizStats attempts={attempts} isSummary={sessionIsOver} />
         </div>
       </div>
     </div>

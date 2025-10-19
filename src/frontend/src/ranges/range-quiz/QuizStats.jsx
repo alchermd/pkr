@@ -1,14 +1,17 @@
-function QuizStats({ attempts }) {
+function QuizStats({ attempts, isSummary }) {
   const correctAnswers = attempts.filter((a) => a.answerIsCorrect).length;
   const accuracy =
     attempts.length > 0
       ? ((correctAnswers / attempts.length) * 100).toFixed(2) + "%"
       : "N/A";
   const streakData = getStreakData(attempts);
+  const accuracyData = getAccuracyByPosition(attempts);
   return (
     <div className="card mt-5">
       <div className="card-header">
-        <h3 className="card-title">Stats</h3>
+        <h3 className="card-title">
+          {isSummary ? "Session Summary" : "Stats"}
+        </h3>
       </div>
       <div className="card-body">
         <div className="datagrid">
@@ -34,6 +37,16 @@ function QuizStats({ attempts }) {
               {streakData.streakRecord}
             </div>
           </div>
+          {isSummary && (
+            <>
+              <div className="datagrid-item">
+                <div className="datagrid-title">Accuracy by Position</div>
+                <div className="datagrid-content">
+                  <AccuracyList accuracyData={accuracyData} />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -95,4 +108,105 @@ function getStreakData(attempts) {
   return { streakString, streakClass, streakRecord, streakRecordClass };
 }
 
+// Computes accuracy by position from the given attempts.
+// Returns:
+// {
+//   byPosition: Record<string, number>,     // e.g. { BTN: 85, CO: 67, ... }
+//   summaryString: string,                  // e.g. "BTN: 85% | CO: 67% | SB: 50%"
+//   bestPosition: string | null,            // e.g. "BTN"
+//   bestPositionClass: string,              // "text-success" | "text-muted"
+//   worstPosition: string | null,           // e.g. "SB"
+//   worstPositionClass: string,             // "text-danger" | "text-muted"
+// }
+function getAccuracyByPosition(attempts) {
+  if (!attempts || attempts.length === 0) {
+    return {
+      byPosition: {},
+      summaryString: "N/A",
+      bestPosition: null,
+      bestPositionClass: "text-muted",
+      worstPosition: null,
+      worstPositionClass: "text-muted",
+    };
+  }
+
+  // --- Group attempts by position ---
+  const stats = {};
+  for (const { scenario, answerIsCorrect } of attempts) {
+    const position = scenario.position;
+    if (!stats[position]) stats[position] = { correct: 0, total: 0 };
+    stats[position].total++;
+    if (answerIsCorrect) stats[position].correct++;
+  }
+
+  // --- Compute accuracy per position ---
+  const byPosition = {};
+  for (const [pos, { correct, total }] of Object.entries(stats)) {
+    byPosition[pos] = Math.round((correct / total) * 100);
+  }
+
+  // --- Derive best and worst ---
+  const positions = Object.keys(byPosition);
+  if (positions.length === 0) {
+    return {
+      byPosition,
+      summaryString: "N/A",
+      bestPosition: null,
+      bestPositionClass: "text-muted",
+      worstPosition: null,
+      worstPositionClass: "text-muted",
+    };
+  }
+
+  let bestPosition = positions[0];
+  let worstPosition = positions[0];
+  for (const pos of positions) {
+    if (byPosition[pos] > byPosition[bestPosition]) bestPosition = pos;
+    if (byPosition[pos] < byPosition[worstPosition]) worstPosition = pos;
+  }
+
+  const summaryString = positions
+    .map((pos) => `${pos}: ${byPosition[pos]}%`)
+    .join(" | ");
+
+  return {
+    byPosition,
+    summaryString,
+    bestPosition,
+    bestPositionClass: "text-success",
+    worstPosition,
+    worstPositionClass: "text-danger",
+  };
+}
+function AccuracyList({ accuracyData }) {
+  console.log(accuracyData);
+  const {
+    byPosition,
+    bestPosition,
+    worstPosition,
+    bestPositionClass,
+    worstPositionClass,
+  } = accuracyData;
+
+  const positions = Object.keys(byPosition);
+  if (positions.length === 0) {
+    return <p className="text-muted">No data yet.</p>;
+  }
+
+  return (
+    <ul className="list-unstyled mt-3">
+      {positions.map((pos) => {
+        let className = "text-body";
+        if (pos === bestPosition) className = bestPositionClass;
+        else if (pos === worstPosition) className = worstPositionClass;
+
+        return (
+          <li key={pos} className={className}>
+            <strong>{pos}</strong>: {byPosition[pos]}%
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 export default QuizStats;
