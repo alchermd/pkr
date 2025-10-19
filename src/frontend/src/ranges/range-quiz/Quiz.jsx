@@ -10,6 +10,9 @@ function Quiz({ grids, available_positions }) {
   const showAnswer = userAnswer !== null;
   const answerIsCorrect = userAnswer === scenario?.answer;
 
+  // Quiz settings
+  const [autoNext, setAutoNext] = useState(false);
+
   // Quiz stats
   const [attempts, setAttempts] = useState([]);
 
@@ -46,6 +49,9 @@ function Quiz({ grids, available_positions }) {
     setTimeout(() => {
       setFeedbackClass("");
       setDisableActions(false);
+      if (autoNext) {
+        handleNext();
+      }
     }, 750);
   }
 
@@ -55,6 +61,16 @@ function Quiz({ grids, available_positions }) {
         <div className="col-md-8 offset-md-1 col-lg-6 offset-lg-3">
           <div className={`card ${feedbackClass}`}>
             <div className="card-body">
+              <label className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={autoNext}
+                  onChange={(e) => setAutoNext(e.target.checked)}
+                />
+                <span className="form-check-label">Auto-next</span>
+              </label>
+
               {scenario && (
                 <>
                   <Question scenario={scenario} />
@@ -82,6 +98,7 @@ function Quiz({ grids, available_positions }) {
     </div>
   );
 }
+
 function randomScenario(grids, available_positions) {
   const randomPosition =
     available_positions[Math.floor(Math.random() * available_positions.length)];
@@ -97,4 +114,5 @@ function randomScenario(grids, available_positions) {
     answer: randomCell.action,
   };
 }
+
 export default Quiz;
