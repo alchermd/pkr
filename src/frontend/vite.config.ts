@@ -1,22 +1,20 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from "path";
-import fs from "fs";
+import * as path from "path";
+import * as fs from "fs";
 
-// Dynamically find all main.jsx entry points
-function getEntries() {
+function getEntries(): Record<string, string> {
   const baseDir = path.resolve(__dirname, "src/ranges");
-  const entries = {};
+  const entries: Record<string, string> = {};
 
-  function walk(dir) {
+  function walk(dir: string) {
     const files = fs.readdirSync(dir, { withFileTypes: true });
     for (const file of files) {
       const fullPath = path.join(dir, file.name);
       if (file.isDirectory()) {
         walk(fullPath);
-      } else if (file.name === "main.jsx") {
+      } else if (file.name === "main.tsx") {
         const relDir = path.relative(baseDir, path.dirname(fullPath));
-        // Output: dist/ranges/js/[relDirName].js
         entries[`ranges/js/${relDir}`] = fullPath;
       }
     }
@@ -34,10 +32,7 @@ export default defineConfig({
     rollupOptions: {
       input: getEntries(),
       output: {
-        entryFileNames: (chunkInfo) => {
-          // Preserve the folder name in dist/ranges/js
-          return `${chunkInfo.name}.js`;
-        },
+        entryFileNames: (chunkInfo) => `${chunkInfo.name}.js`,
       },
     },
   },
