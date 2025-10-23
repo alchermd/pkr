@@ -2,13 +2,7 @@
 {% load static %}
 {% block title %}{{ initial_data.range_name }}{% endblock %}
 {% block react %}
-    {% if DEBUG %}
-        <script type="module" src="{% static 'ranges/js/vite-react-refresh.js' %}"></script>
-        <script type="module"
-                src="http://localhost:5173/src/ranges/range-grid/main.jsx"></script>
-    {% else %}
-        <script type="module" src="{% static 'ranges/range-grid.js' %}"></script>
-    {% endif %}
+    {% include "ranges/partials/react_component.html" with component_path="ranges/range-grid" %}
 {% endblock %}
 {% block content %}
     {% include "ranges/_header.html" with pretitle=page_pretitle title=page_title %}

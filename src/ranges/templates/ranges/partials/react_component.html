@@ -1,0 +1,10 @@
+{% load static %}
+{% if DEBUG %}
+    <script type="module" src="{% static 'ranges/js/vite-react-refresh.js' %}"></script>
+    <script type="module"
+            src="http://localhost:5173/src/{{ component_path }}/main.tsx"></script>
+{% else %}
+    {% with js_path=component_path|add:'.js' %}
+        <script type="module" src="{% static js_path %}"></script>
+    {% endwith %}
+{% endif %}
