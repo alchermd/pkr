@@ -1,4 +1,4 @@
-import "@ranges/range-quiz/QuizCards.css";
+import "@/ranges/range-quiz/QuizCards.css";
 import { useEffect, useState } from "react";
 import { Cards } from "@/ranges/range-quiz/types";
 import Suit from "@/ranges/range-quiz/Suit";
