@@ -26,6 +26,11 @@ function getEntries(): Record<string, string> {
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
   build: {
     outDir: path.resolve(__dirname, "dist"),
     emptyOutDir: false,
