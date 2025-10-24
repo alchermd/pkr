@@ -70,6 +70,7 @@ format:
 	uv tool run ruff format
 	uv tool run djlint src --reformat --format-css --format-js
 	cd src/frontend && npm run format
+	cd src/frontend && npm run eslint
 
 i:
 	uv add $(pkg)
