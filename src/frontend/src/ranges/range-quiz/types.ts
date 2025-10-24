@@ -12,3 +12,19 @@ export type Scenario = {
   dealtCard: string;
   answer: string;
 };
+
+export type Stats = {
+  [P in Position]?: {
+    correct: number;
+    total: number;
+  };
+};
+
+export type Stat = {
+  correct: number;
+  total: number;
+};
+
+export type Accuracy = {
+  [P in Position]?: number;
+};
