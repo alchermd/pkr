@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
-import QuizControls from "./QuizControls";
-import Question from "./Question";
-import Answer from "./Answer";
-import QuizStats from "./QuizStats";
+import { Grids, Position, Positions } from "@/ranges/types";
+import QuizControls from "@/ranges/range-quiz/QuizControls";
+import QuizStats from "@/ranges/range-quiz/QuizStats";
+import Answer from "@/ranges/range-quiz/Answer";
+import Question from "@/ranges/range-quiz/Question";
+import { Attempts, Scenario } from "@/ranges/range-quiz/types";
+import { randomScenario } from "@/ranges/range-quiz/utils";
 
 const HANDS_PER_SESSION = 20;
 
-function Quiz({ grids, available_positions }) {
-  const [scenario, setScenario] = useState(null);
-  const [userAnswer, setUserAnswer] = useState(null);
+export interface QuizProps {
+  grids: Grids;
+  available_positions: Positions;
+}
+
+function Quiz({ grids, available_positions }: QuizProps) {
+  const [scenario, setScenario] = useState<Scenario | null>(null);
+  const [userAnswer, setUserAnswer] = useState<string | null>(null);
   const showAnswer = userAnswer !== null;
   const answerIsCorrect = userAnswer === scenario?.answer;
   const selectedGrid = grids.find((grid) => grid[0] === scenario?.position);
@@ -17,7 +25,7 @@ function Quiz({ grids, available_positions }) {
   const [autoNext, setAutoNext] = useState(false);
 
   // Quiz stats
-  const [attempts, setAttempts] = useState([]);
+  const [attempts, setAttempts] = useState<Attempts>([]);
   const sessionIsOver = attempts.length >= HANDS_PER_SESSION;
 
   // Feedback class for the card based on the user's answer
@@ -37,7 +45,9 @@ function Quiz({ grids, available_positions }) {
 
   // Set the user's answer and add feedback classes to the card.
   // Also manages quiz stats.
-  function handleAnswer(answer) {
+  function handleAnswer(answer: string) {
+    if (scenario === null) throw Error("No scenario set");
+
     setUserAnswer(answer);
     const answerIsCorrect = answer === scenario.answer;
 
@@ -76,7 +86,7 @@ function Quiz({ grids, available_positions }) {
                   <span className="form-check-label">Auto-next</span>
                 </label>
 
-                {scenario && (
+                {scenario && userAnswer && selectedGrid && (
                   <>
                     <Question scenario={scenario} />
                     <Answer
@@ -104,22 +114,6 @@ function Quiz({ grids, available_positions }) {
       </div>
     </div>
   );
-}
-
-function randomScenario(grids, available_positions) {
-  const randomPosition =
-    available_positions[Math.floor(Math.random() * available_positions.length)];
-  const randomGrid = grids.find(
-    ([gridPosition, gridData]) => gridPosition === randomPosition,
-  )[1];
-  const randomRow = randomGrid[Math.floor(Math.random() * randomGrid.length)];
-  const randomCell = randomRow[Math.floor(Math.random() * randomRow.length)];
-
-  return {
-    position: randomPosition,
-    dealtCard: randomCell.label,
-    answer: randomCell.action,
-  };
 }
 
 export default Quiz;

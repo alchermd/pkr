@@ -1,7 +1,20 @@
-import "./Answer.css";
-import Grid from "../range-grid/Grid";
+import "@/ranges/range-quiz/Answer.css";
+import Grid from "@/ranges/range-grid/Grid";
+import { GridData, Position } from "@/ranges/types";
 
-function Answer({ answer, showAnswer, answerIsCorrect, scenario, answerGrid }) {
+export interface AnswerProps {
+  answer: string;
+  showAnswer: boolean;
+  answerIsCorrect: boolean;
+  answerGrid: [Position, GridData];
+}
+
+function Answer({
+  answer,
+  showAnswer,
+  answerIsCorrect,
+  answerGrid,
+}: AnswerProps) {
   return (
     <>
       <div className="answer text-center">
@@ -24,7 +37,7 @@ function Answer({ answer, showAnswer, answerIsCorrect, scenario, answerGrid }) {
           </p>
         )}
       </div>
-      <div className="modal modal-lg" id="informationModal" tabIndex="-1">
+      <div className="modal modal-lg" id="informationModal" tabIndex={-1}>
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
