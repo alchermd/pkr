@@ -28,3 +28,5 @@ export type Stat = {
 export type Accuracy = {
   [P in Position]?: number;
 };
+
+export type Cards = Array<string>;

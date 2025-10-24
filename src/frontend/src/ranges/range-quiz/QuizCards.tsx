@@ -1,10 +1,15 @@
-import "./QuizCards.css";
-import Suit from "./Suit";
+import "@ranges/range-quiz/QuizCards.css";
 import { useEffect, useState } from "react";
+import { Cards } from "@/ranges/range-quiz/types";
+import Suit from "@/ranges/range-quiz/Suit";
 
-function QuizCards({ cards }) {
-  const [card1Suit, setCard1Suit] = useState(null);
-  const [card2Suit, setCard2Suit] = useState(null);
+export interface QuizCardsProps {
+  cards: Cards;
+}
+
+function QuizCards({ cards }: QuizCardsProps) {
+  const [card1Suit, setCard1Suit] = useState<string>("");
+  const [card2Suit, setCard2Suit] = useState<string>("");
 
   useEffect(() => {
     const suits = generateSuits(cards);
@@ -30,7 +35,7 @@ function QuizCards({ cards }) {
 
 // Given a list of cards in the format of a single string ("AKs", "72o", "TT")
 // Generate a random suit combination for the cards. The suit does not repeat for offsuit and pairs.
-function generateSuits(cards) {
+function generateSuits(cards: Cards): Array<string> {
   if (!(cards.length === 2 || cards.length === 3))
     throw new Error("Unsupported cards format");
 
