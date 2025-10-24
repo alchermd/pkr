@@ -1,9 +1,16 @@
+export interface QuizControlsProps {
+  showAnswer: boolean;
+  handleNext: () => void;
+  handleAnswer: (answer: string) => void;
+  disableActions: boolean;
+}
+
 function QuizControls({
   showAnswer,
   handleNext,
   handleAnswer,
   disableActions,
-}) {
+}: QuizControlsProps) {
   return (
     <div className="d-flex align-content-center justify-content-center gap-3">
       {/* These options should've been generated somewhere and not hardcoded */}
