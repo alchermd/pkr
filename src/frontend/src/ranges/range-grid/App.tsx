@@ -1,22 +1,30 @@
-import Grid from "./Grid";
-import PokerTable from "../components/PokerTable";
+import PokerTable from "@/ranges/components/PokerTable";
 import { useState } from "react";
+import { Grids, Position } from "@/ranges/types";
+import GridComponent from "@/ranges/range-grid/Grid";
+import { findGridByPosition } from "@/ranges/utils";
 
-function findGridByPosition(grids, position) {
-  return grids.find(([gridPosition, gridData]) => gridPosition === position)[1];
+export interface AppProps {
+  description: string;
+  grids: Grids;
+  available_positions: Array<string>;
+  quiz_mode_url: string;
 }
 
-export default function App({ initialData }) {
-  const { description, grids, available_positions, quiz_mode_url } =
-    initialData;
-  const [position, setPosition] = useState("BTN");
+export default function App({
+  description,
+  grids,
+  available_positions,
+  quiz_mode_url,
+}: AppProps) {
+  const [position, setPosition] = useState<Position>("BTN");
   const grid = findGridByPosition(grids, position);
 
   return (
     <div className="mt-5">
       <div className="row">
         <div className="col-md-4 offset-md-1 d-flex flex-column align-items-center text-center mb-5">
-          <Grid position={position} grid={grid} />
+          <GridComponent position={position} grid={grid} />
         </div>
         <div className="col-md-4 offset-md-1">
           <div className="mb-5">
