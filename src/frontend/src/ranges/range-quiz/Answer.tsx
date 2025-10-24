@@ -3,7 +3,7 @@ import Grid from "@/ranges/range-grid/Grid";
 import { GridData, Position } from "@/ranges/types";
 
 export interface AnswerProps {
-  answer: string;
+  answer: string | null;
   showAnswer: boolean;
   answerIsCorrect: boolean;
   answerGrid: [Position, GridData];
@@ -18,7 +18,7 @@ function Answer({
   return (
     <>
       <div className="answer text-center">
-        {showAnswer && (
+        {answer && showAnswer && (
           <p>
             You selected <strong>{answer}</strong>.{" "}
             {answerIsCorrect ? (

@@ -86,7 +86,7 @@ function Quiz({ grids, available_positions }: QuizProps) {
                   <span className="form-check-label">Auto-next</span>
                 </label>
 
-                {scenario && userAnswer && selectedGrid && (
+                {scenario && selectedGrid && (
                   <>
                     <Question scenario={scenario} />
                     <Answer
