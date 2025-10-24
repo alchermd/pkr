@@ -8,7 +8,7 @@ export function randomScenario(
   const randomPosition =
     available_positions[Math.floor(Math.random() * available_positions.length)];
   const randomGridData = grids.find(
-    ([gridPosition, gridData]) => gridPosition === randomPosition,
+    ([gridPosition]) => gridPosition === randomPosition,
   );
   if (randomGridData === undefined) throw Error("No grid found for position");
 

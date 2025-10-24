@@ -1,5 +1,4 @@
-import { Accuracy, Attempts, Stats } from "@/ranges/range-quiz/types";
-import { Position, Positions } from "@/ranges/types";
+import { Attempts } from "@/ranges/range-quiz/types";
 import AccuracyList from "@/ranges/range-quiz/AccuracyList";
 import {
   getAccuracyByPosition,

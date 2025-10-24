@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Grids, Position, Positions } from "@/ranges/types";
+import { Grids, Positions } from "@/ranges/types";
 import QuizControls from "@/ranges/range-quiz/QuizControls";
 import QuizStats from "@/ranges/range-quiz/QuizStats";
 import Answer from "@/ranges/range-quiz/Answer";
