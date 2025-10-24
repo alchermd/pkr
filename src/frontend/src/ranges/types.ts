@@ -1,4 +1,5 @@
 export type Position = "BB" | "SB" | "BTN" | "CO" | "HJ" | "LJ" | "UTG";
+export type Positions = Array<Position>;
 export type HandAction = {
   label: string;
   action: "open" | "call" | "fold" | "raise" | "check";

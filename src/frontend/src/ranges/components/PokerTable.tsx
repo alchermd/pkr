@@ -1,16 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./PokerTable.css";
+import "@/ranges/components/PokerTable.css";
+import { Position, Positions } from "@/ranges/types";
 
-const POSITIONS_6MAX = ["UTG", "HJ", "CO", "BTN", "SB", "BB"];
+const POSITIONS_6MAX: Positions = ["UTG", "HJ", "CO", "BTN", "SB", "BB"];
+const TABLE_IMAGE_URL = "/static/ranges/img/table.png";
+
+export interface PokerTableProps {
+  players?: number;
+  selectedPosition: Position;
+  onPositionClick: (position: Position) => void;
+  availablePositions: Positions;
+}
 
 function PokerTable({
   players = 6,
   selectedPosition = "BTN",
   onPositionClick,
   availablePositions,
-}) {
-  const containerRef = useRef(null);
-  const imgRef = useRef(null);
+}: PokerTableProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   const [size, setSize] = useState({ width: 0, height: 0 });
   const updateSize = () => {
@@ -21,6 +30,7 @@ function PokerTable({
       });
     }
   };
+
   // Track live container size (for responsiveness)
   useEffect(() => {
     updateSize();
@@ -58,7 +68,7 @@ function PokerTable({
     <div ref={containerRef} className="poker-table-container">
       <img
         ref={imgRef}
-        src="/static/ranges/img/table.png"
+        src={TABLE_IMAGE_URL}
         alt="Poker Table"
         className="poker-table-image"
       />
