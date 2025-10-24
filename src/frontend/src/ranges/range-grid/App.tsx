@@ -1,13 +1,13 @@
 import PokerTable from "@/ranges/components/PokerTable";
 import { useState } from "react";
-import { Grids, Position } from "@/ranges/types";
+import { Grids, Position, Positions } from "@/ranges/types";
 import GridComponent from "@/ranges/range-grid/Grid";
 import { findGridByPosition } from "@/ranges/utils";
 
 export interface AppProps {
   description: string;
   grids: Grids;
-  available_positions: Array<string>;
+  available_positions: Positions;
   quiz_mode_url: string;
 }
 
@@ -19,6 +19,10 @@ export default function App({
 }: AppProps) {
   const [position, setPosition] = useState<Position>("BTN");
   const grid = findGridByPosition(grids, position);
+
+  if (grid === null) {
+    return <div>No grid found for position {position}</div>;
+  }
 
   return (
     <div className="mt-5">
