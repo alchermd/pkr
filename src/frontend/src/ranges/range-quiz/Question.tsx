@@ -1,6 +1,12 @@
-import QuizCards from "./QuizCards";
+import { Scenario } from "@/ranges/range-quiz/types";
+import QuizCards from "@/ranges/range-quiz/QuizCards";
+import { verbosePositionName } from "@/ranges/range-quiz/utils";
 
-function Question({ scenario }) {
+export interface QuestionProps {
+  scenario: Scenario;
+}
+
+function Question({ scenario }: QuestionProps) {
   return (
     <div className="text-center py-5">
       <QuizCards cards={scenario.dealtCard} />
@@ -14,18 +20,6 @@ function Question({ scenario }) {
       <p className="mt-4">What action do you choose?</p>
     </div>
   );
-}
-
-function verbosePositionName(position) {
-  const positionNames = {
-    UTG: "Under the Gun",
-    HJ: "Hijack",
-    CO: "Cutoff",
-    BTN: "Button",
-    SB: "Small Blind",
-    BB: "Big Blind",
-  };
-  return positionNames[position] || position;
 }
 
 export default Question;

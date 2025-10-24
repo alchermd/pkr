@@ -168,3 +168,15 @@ export function getAccuracyByPosition(attempts: Attempts): AccuracyData {
     worstPositionClass: "text-danger",
   };
 }
+
+export function verbosePositionName(position: Position) {
+  const positionNames: Record<Position, string> = {
+    UTG: "Under the Gun",
+    HJ: "Hijack",
+    CO: "Cutoff",
+    BTN: "Button",
+    SB: "Small Blind",
+    BB: "Big Blind",
+  };
+  return positionNames[position] || position;
+}
