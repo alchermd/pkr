@@ -1,4 +1,8 @@
-function Suit({ suit }) {
+export interface SuitProps {
+  suit: string;
+}
+
+function Suit({ suit }: SuitProps) {
   switch (suit) {
     case "H":
       return <span className="text-danger">&hearts;</span>;
