@@ -72,3 +72,9 @@ CMD [ \
      "config.wsgi:application", \
      "--bind", "0.0.0.0:8000" \
 ]
+
+# --- Test stage ---
+FROM builder AS test
+ENV PATH="/app/.venv/bin:$PATH"
+WORKDIR /app
+CMD ["pytest"]
