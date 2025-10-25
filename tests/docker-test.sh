@@ -1,5 +1,7 @@
 #!/bin/bash -xe
 
+set -euo pipefail
+
 # Rebuild test image with dev dependencies
 docker build --target test --build-arg INSTALL_DEV=true -t pkr-test -f Dockerfile .
 
