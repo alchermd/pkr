@@ -9,19 +9,12 @@ MANAGE := $(DC) exec --workdir /app/src pkr python manage.py
 UVR := uv run
 DJ := cd src && $(UVR) python manage.py
 
-.PHONY: help run shell migrate makemigrations superuser dlint lint
-
-help:
-	@echo "Commands:"
-	@echo "  make up                       # Run dev server"
-	@echo "  make push                     # Build and push image to DO Container Registry"
-	@echo "  make shell                    # Django shell"
-	@echo "  make migrate          		   # Apply migrations"
-	@echo "  make makemigrations           # Create migrations"
-	@echo "  make superuser                # Create a superuser"
-	@echo "  make i pkg=<package name>     # Install a Python package"
-	@echo "  make idev pkg=<package name>  # Install a Python package as a dev dependency"
-	@echo "  make <command>                # Run 'manage.py <command>'"
+.PHONY: \
+	up dup dsmoke push shell migrate makemigrations createsuperuser \
+	test dtest format dlint lint lint-frontend lint-backend \
+	i idev finit fup \
+	run \
+	%
 
 up:
 	uv sync
