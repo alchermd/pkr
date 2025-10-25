@@ -9,19 +9,13 @@ MANAGE := $(DC) exec --workdir /app/src pkr python manage.py
 UVR := uv run
 DJ := cd src && $(UVR) python manage.py
 
-.PHONY: help run shell migrate makemigrations superuser
-
-help:
-	@echo "Commands:"
-	@echo "  make up                       # Run dev server"
-	@echo "  make push                     # Build and push image to DO Container Registry"
-	@echo "  make shell                    # Django shell"
-	@echo "  make migrate          		   # Apply migrations"
-	@echo "  make makemigrations           # Create migrations"
-	@echo "  make superuser                # Create a superuser"
-	@echo "  make i pkg=<package name>     # Install a Python package"
-	@echo "  make idev pkg=<package name>  # Install a Python package as a dev dependency"
-	@echo "  make <command>                # Run 'manage.py <command>'"
+.PHONY: \
+	up dup dsmoke push shell migrate makemigrations createsuperuser \
+	test dtest test-backend test-frontend \
+	format lint lint-frontend lint-backend dlint\
+	i idev finit fup \
+	run \
+	%
 
 up:
 	uv sync
@@ -58,9 +52,13 @@ makemigrations:
 createsuperuser:
 	$(DJ) createsuperuser
 
-test:
+test-backend:
 	cd src && $(UVR) pytest
-	cd src/frontend && npm run test -- --watch=false
+
+test-frontend:
+	cd src/frontend && npm ci && npm run test -- --watch=false
+
+test: test-backend test-frontend
 
 dtest:
 	bash ./tests/docker-test.sh
@@ -71,6 +69,20 @@ format:
 	uv tool run djlint src --reformat --format-css --format-js
 	cd src/frontend && npm run format
 	cd src/frontend && npm run eslint
+
+dlint:
+	bash ./tests/docker-lint.sh
+
+lint-frontend:
+	cd src/frontend && npm run format:check
+	cd src/frontend && npm run eslint -- --max-warnings=0
+
+lint-backend:
+	uv tool run ruff check --select I
+	uv tool run ruff format --check
+	uv tool run djlint src --check
+
+lint: lint-backend lint-frontend
 
 i:
 	uv add $(pkg)
