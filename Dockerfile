@@ -77,4 +77,3 @@ CMD [ \
 FROM builder AS test
 ENV PATH="/app/.venv/bin:$PATH"
 WORKDIR /app
-CMD ["pytest"]
