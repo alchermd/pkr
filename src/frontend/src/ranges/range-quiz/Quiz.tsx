@@ -91,6 +91,7 @@ function Quiz({ grids, available_positions }: QuizProps) {
                     <Question scenario={scenario} />
                     <Answer
                       answer={userAnswer}
+                      scenario={scenario}
                       showAnswer={showAnswer}
                       answerIsCorrect={answerIsCorrect}
                       answerGrid={selectedGrid}

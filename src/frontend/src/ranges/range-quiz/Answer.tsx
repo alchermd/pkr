@@ -1,9 +1,11 @@
 import "@/ranges/range-quiz/Answer.css";
 import Grid from "@/ranges/range-grid/Grid";
 import { GridData, Position } from "@/ranges/types";
+import { Scenario } from "@/ranges/range-quiz/types";
 
 export interface AnswerProps {
   answer: string | null;
+  scenario: Scenario;
   showAnswer: boolean;
   answerIsCorrect: boolean;
   answerGrid: [Position, GridData];
@@ -11,6 +13,7 @@ export interface AnswerProps {
 
 function Answer({
   answer,
+  scenario,
   showAnswer,
   answerIsCorrect,
   answerGrid,
@@ -50,8 +53,12 @@ function Answer({
               ></button>
             </div>
             <div className="modal-body">
-              {answerGrid && (
-                <Grid position={answerGrid[0]} grid={answerGrid[1]} />
+              {answerGrid && answer && (
+                <Grid
+                  position={answerGrid[0]}
+                  grid={answerGrid[1]}
+                  highlightedLabel={scenario.dealtCard}
+                />
               )}
             </div>
             <div className="modal-footer">
