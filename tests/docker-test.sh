@@ -28,6 +28,9 @@ docker run --rm \
   -e POSTGRES_HOST=db \
   -e POSTGRES_PORT=5432 \
   -e DEBUG=1 \
+  -e SECRET_KEY=ci-key \
+  -e ALLOWED_HOSTS="*" \
+  -e STATIC_ROOT = "/tmp/staticfiles" \
   pkr-test bash -c "cd src && uv run pytest"
 
 # Run frontend tests
