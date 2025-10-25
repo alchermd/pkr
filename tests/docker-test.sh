@@ -22,15 +22,15 @@ NETWORK_NAME=$(docker network inspect --format='{{.Name}}' $NETWORK_NAME)
 # Run backend tests using the same network and env as compose
 docker run --rm \
   --network "$NETWORK_NAME" \
-  -e POSTGRES_DB=pkr_db \
-  -e POSTGRES_USER=pkr_user \
-  -e POSTGRES_PASSWORD=pkr_pass \
-  -e POSTGRES_HOST=db \
-  -e POSTGRES_PORT=5432 \
-  -e DEBUG=1 \
-  -e SECRET_KEY=ci-key \
+  -e POSTGRES_DB="pkr_db" \
+  -e POSTGRES_USER="pkr_user" \
+  -e POSTGRES_PASSWORD="pkr_pass" \
+  -e POSTGRES_HOST="db" \
+  -e POSTGRES_PORT="5432" \
+  -e DEBUG="1" \
+  -e SECRET_KEY="ci-key" \
   -e ALLOWED_HOSTS="*" \
-  -e STATIC_ROOT = "/tmp/staticfiles" \
+  -e STATIC_ROOT="/tmp/staticfiles" \
   pkr-test bash -c "cd src && uv run pytest"
 
 # Run frontend tests
