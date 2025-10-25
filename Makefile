@@ -11,7 +11,8 @@ DJ := cd src && $(UVR) python manage.py
 
 .PHONY: \
 	up dup dsmoke push shell migrate makemigrations createsuperuser \
-	test dtest format dlint lint lint-frontend lint-backend \
+	test dtest test-backend test-frontend \
+	format lint lint-frontend lint-backend dlint\
 	i idev finit fup \
 	run \
 	%
@@ -51,11 +52,14 @@ makemigrations:
 createsuperuser:
 	$(DJ) createsuperuser
 
-test:
+test-backend:
 	cd src && $(UVR) pytest
-	cd src/frontend && npm run test -- --watch=false
 
-# When updating the test targets, make sure to update tests/docker-test.sh as well.
+test-frontend:
+	cd src/frontend && npm ci && npm run test -- --watch=false
+
+test: test-backend test-frontend
+
 dtest:
 	bash ./tests/docker-test.sh
 
@@ -78,7 +82,6 @@ lint-backend:
 	uv tool run ruff format --check
 	uv tool run djlint src --check
 
-# When updating the lint targets, make sure to update tests/docker-lint.sh as well.
 lint: lint-backend lint-frontend
 
 i:

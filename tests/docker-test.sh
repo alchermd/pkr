@@ -21,6 +21,8 @@ NETWORK_NAME=$(docker network inspect --format='{{.Name}}' $NETWORK_NAME)
 
 # Run backend tests using the same network and env as compose
 docker run --rm \
+  -v "$(pwd):/app" \
+  -w /app \
   --network "$NETWORK_NAME" \
   -e POSTGRES_DB="pkr_db" \
   -e POSTGRES_USER="pkr_user" \
@@ -31,10 +33,10 @@ docker run --rm \
   -e SECRET_KEY="ci-key" \
   -e ALLOWED_HOSTS="*" \
   -e STATIC_ROOT="/tmp/staticfiles" \
-  pkr-test bash -c "cd src && uv run pytest"
+  pkr-test make test-backend
 
 # Run frontend tests
 docker run --rm \
-  -v "$(pwd)/src/frontend:/app" \
+  -v "$(pwd):/app" \
   -w /app \
-  node:20-slim bash -c "npm ci && npm run test -- --watch=false"
+  node:20-slim bash -c "apt-get update -qq && apt-get install -y --no-install-recommends make && cd /app/src/frontend/ && npm ci && cd /app && make test-frontend"
