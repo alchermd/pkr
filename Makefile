@@ -9,7 +9,7 @@ MANAGE := $(DC) exec --workdir /app/src pkr python manage.py
 UVR := uv run
 DJ := cd src && $(UVR) python manage.py
 
-.PHONY: help run shell migrate makemigrations superuser
+.PHONY: help run shell migrate makemigrations superuser dlint
 
 help:
 	@echo "Commands:"
@@ -71,6 +71,15 @@ format:
 	uv tool run djlint src --reformat --format-css --format-js
 	cd src/frontend && npm run format
 	cd src/frontend && npm run eslint
+
+format-check:
+	uv tool run ruff check --select I
+	uv tool run ruff format --check
+	uv tool run djlint src --check
+	cd src/frontend && npm run format:check
+	cd src/frontend && npm run eslint -- --max-warnings=0
+
+dlint: format-check
 
 i:
 	uv add $(pkg)
