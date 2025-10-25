@@ -62,6 +62,7 @@ test:
 	cd src && $(UVR) pytest
 	cd src/frontend && npm run test -- --watch=false
 
+# When updating the test targets, make sure to update tests/docker-test.sh as well.
 dtest:
 	bash ./tests/docker-test.sh
 
@@ -84,6 +85,7 @@ lint-backend:
 	uv tool run ruff format --check
 	uv tool run djlint src --check
 
+# When updating the lint targets, make sure to update tests/docker-lint.sh as well.
 lint: lint-backend lint-frontend
 
 i:
