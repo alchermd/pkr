@@ -9,7 +9,7 @@ MANAGE := $(DC) exec --workdir /app/src pkr python manage.py
 UVR := uv run
 DJ := cd src && $(UVR) python manage.py
 
-.PHONY: help run shell migrate makemigrations superuser dlint
+.PHONY: help run shell migrate makemigrations superuser dlint lint
 
 help:
 	@echo "Commands:"
@@ -72,14 +72,19 @@ format:
 	cd src/frontend && npm run format
 	cd src/frontend && npm run eslint
 
-format-check:
-	uv tool run ruff check --select I
-	uv tool run ruff format --check
-	uv tool run djlint src --check
+dlint:
+	bash ./tests/docker-lint.sh
+
+lint-frontend:
 	cd src/frontend && npm run format:check
 	cd src/frontend && npm run eslint -- --max-warnings=0
 
-dlint: format-check
+lint-backend:
+	uv tool run ruff check --select I
+	uv tool run ruff format --check
+	uv tool run djlint src --check
+
+lint: lint-backend lint-frontend
 
 i:
 	uv add $(pkg)
