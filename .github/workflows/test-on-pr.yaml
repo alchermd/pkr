@@ -16,5 +16,8 @@ jobs:
 
       - uses: docker/setup-buildx-action@v3
 
+      - name: Create .env.mk file
+        run: touch .env.mk
+
       - name: Run tests via Makefile
         run: make dtest
