@@ -16,5 +16,5 @@ jobs:
 
       - uses: docker/setup-buildx-action@v3
 
-      - name: Run tests via Makefile
+      - name: Run linters via Makefile
         run: make dlint
