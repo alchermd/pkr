@@ -25,4 +25,5 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("ranges/", include("ranges.urls")),
     path("", marketing_views.home, name="home"),
+    path("", include("authn.urls")),
 ]

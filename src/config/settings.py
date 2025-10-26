@@ -146,6 +146,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 LOGIN_REDIRECT_URL = reverse_lazy("ranges:range_list")
+LOGIN_URL = reverse_lazy("authn:login")
 
 AUTH_USER_MODEL = "authn.User"
 
