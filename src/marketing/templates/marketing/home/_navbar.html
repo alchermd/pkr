@@ -21,8 +21,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <nav class="navbar-nav ms-auto">
-                <div class="nav-item ms-4">
-                    <a href="{% provider_login_url 'google' %}" class="btn btn-primary">Register</a>
+                <div class="nav-item ms-2">
+                    <form action="{% provider_login_url 'google' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Register" class="btn btn-primary">
+                    </form>
+                </div>
+                <div class="nav-item ms-2">
+                    <form action="{% provider_login_url 'google' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Login" class="btn btn-outline-secondary">
+                    </form>
                 </div>
             </nav>
         </div>
