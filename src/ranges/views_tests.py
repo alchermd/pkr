@@ -1,18 +1,9 @@
 import pytest
-from django.contrib.auth import get_user_model
 from django.test import Client
 from django.urls import reverse
 from pytest_django.asserts import assertTemplateUsed
 
 from ranges.models import PreFlopRange
-
-
-@pytest.fixture
-def authenticated_client(client):
-    User = get_user_model()
-    test_user = User.objects.create_user(username="testuser", password="testpass")
-    client.login(username="testuser", password="testpass")
-    return client
 
 
 @pytest.mark.django_db

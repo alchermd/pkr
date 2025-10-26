@@ -3,11 +3,6 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth import get_user_model
 
 
-@pytest.fixture
-def User():
-    return get_user_model()
-
-
 @pytest.mark.django_db
 class TestUser:
     def test_can_resolve_profile_picture_through_google(self, User):
