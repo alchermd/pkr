@@ -33,6 +33,8 @@ docker run --rm \
   -e SECRET_KEY="ci-key" \
   -e ALLOWED_HOSTS="*" \
   -e STATIC_ROOT="/tmp/staticfiles" \
+  -e GOOGLE_CLIENT_ID="ci-google-client-id" \
+  -e GOOGLE_SECRET="ci-google-secret" \
   pkr-test make test-backend
 
 # Run frontend tests
