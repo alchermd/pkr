@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "ranges.apps.RangesConfig",
     # First-party apps
     "marketing.apps.MarketingConfig",
+    "authn.apps.AuthnConfig",
     "core",
     # Third-party apps
     "allauth",
@@ -145,6 +146,8 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 LOGIN_REDIRECT_URL = reverse_lazy("ranges:range_list")
+
+AUTH_USER_MODEL = "authn.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
