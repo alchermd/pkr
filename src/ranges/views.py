@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -7,6 +8,7 @@ from core.range import load_range_from_csv, make_grid
 from ranges.models import PreFlopRange
 
 
+@login_required
 def range_list(request: HttpRequest) -> HttpResponse:
     ranges = PreFlopRange.objects.all()
     ctx = {
@@ -17,6 +19,7 @@ def range_list(request: HttpRequest) -> HttpResponse:
     return render(request, "ranges/range_list.html", ctx)
 
 
+@login_required
 def range_detail(request: HttpRequest, range_id: int) -> HttpResponse:
     ctx = get_range_details(range_id)
     ctx["initial_data"]["quiz_mode_url"] = reverse("ranges:range_quiz", args=[range_id])
@@ -25,6 +28,7 @@ def range_detail(request: HttpRequest, range_id: int) -> HttpResponse:
     return render(request, "ranges/range_detail.html", ctx)
 
 
+@login_required
 def range_quiz(request: HttpRequest, range_id: int) -> HttpResponse:
     ctx = get_range_details(range_id)
     ctx["page_pretitle"] = "Range Trainer"

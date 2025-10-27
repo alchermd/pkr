@@ -22,6 +22,8 @@ from marketing import views as marketing_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("accounts/", include("allauth.urls")),
     path("ranges/", include("ranges.urls")),
     path("", marketing_views.home, name="home"),
+    path("", include("authn.urls")),
 ]

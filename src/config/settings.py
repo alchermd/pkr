@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+from django.urls.base import reverse_lazy
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -45,8 +46,15 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "ranges.apps.RangesConfig",
+    # First-party apps
     "marketing.apps.MarketingConfig",
+    "authn.apps.AuthnConfig",
     "core",
+    # Third-party apps
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
 ]
 
 MIDDLEWARE = [
@@ -57,6 +65,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -114,6 +123,32 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to log in by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by email
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+# django-allauth social account settings
+SOCIALACCOUNT_PROVIDERS = {
+    # https://docs.allauth.org/en/latest/socialaccount/providers/google.html
+    "google": {
+        "APP": {
+            "client_id": os.environ["GOOGLE_CLIENT_ID"],
+            "secret": os.environ["GOOGLE_SECRET"],
+        },
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+    }
+}
+
+LOGIN_REDIRECT_URL = reverse_lazy("ranges:range_list")
+LOGIN_URL = reverse_lazy("authn:login")
+
+AUTH_USER_MODEL = "authn.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
