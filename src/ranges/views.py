@@ -10,7 +10,6 @@ from ranges.models import PreFlopRange
 
 @login_required
 def range_list(request: HttpRequest) -> HttpResponse:
-    print()
     ranges = PreFlopRange.objects.all()
     ctx = {
         "ranges": ranges,
