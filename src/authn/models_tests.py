@@ -6,7 +6,7 @@ from allauth.socialaccount.models import SocialAccount
 class TestUser:
     def test_can_resolve_profile_picture_through_google(self, User):
         user = User.objects.create_user(username="testuser", password="testpass")
-        social_account = SocialAccount.objects.create(
+        SocialAccount.objects.create(
             user=user,
             provider="google",
             extra_data={"picture": "example.com/picture.jpg"},
