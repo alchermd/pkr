@@ -85,8 +85,8 @@ extend-select = ["DJ"]
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
 
-"*_tests.py" = ["T201", "ANN"]
-"conftest.py" = ["T201", "ANN"]
+"*_tests.py" = ["T201", "ANN", "N802", "N803"]
+"conftest.py" = ["T201", "ANN", "N802", "N803"]
 
 "**/migrations/*.py" = ["ALL"]
 "manage.py" = ["ALL"]
