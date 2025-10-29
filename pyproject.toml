@@ -25,4 +25,63 @@ python_files = ["*_tests.py"]
 
 [tool.ruff]
 select = ["ALL"]
-ignore = []
+
+ignore = [
+    # --- Docstrings ---
+    "D", # pydocstyle: requiring docstrings on everything (too noisy)
+
+    # --- Line length and formatting ---
+    "E501", # line too long (handled by black or your formatter)
+    "W505", # doc line too long
+    "COM812", # missing trailing comma (formatter responsibility)
+    "COM819", # prohibit trailing comma in some cases
+    "ISC001", # implicit string concatenation (often false positives)
+
+    # --- Imports ---
+    "I001", # import sorting (use `ruff check --select I` separately if needed)
+    "TID252", # relative imports (Django projects often have local imports)
+    "F403", # `from module import *` used — sometimes used in Django settings
+    "F405", # name may be undefined from star import
+
+    # --- Complexity ---
+    "C901", # function is too complex (use judgment instead of hard limit)
+    "PLR0911", # too many return statements
+    "PLR0912", # too many branches
+    "PLR0913", # too many arguments
+    "PLR0915", # too many statements
+
+    # --- Type checking ---
+    "ANN101", # missing type annotation for self
+    "ANN102", # missing type annotation for cls
+    "ANN401", # dynamically typed expressions (too strict for Django views/forms)
+    "FBT001", # boolean positional arguments
+    "FBT002", # boolean keyword arguments
+    "FBT003", # boolean default values
+
+    # --- Django specifics ---
+    "DJ001", # model does not define __str__ (handled manually)
+    "DJ008", # model field related_name should end with "+"
+    "DJ012", # model field name not lowercase (too strict)
+
+    # --- Tests ---
+    "S101", # use of assert (pytest allows plain assert)
+
+    "S", # bandit is too noisy in general
+    "ANN204", # not a lot of value
+]
+
+fix = true
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+extend-select = ["DJ"]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+"*_tests.py" = ["T201", "ANN"]
+"conftest.py" = ["T201", "ANN"]
+
+"**/migrations/*.py" = ["ALL"]
+"manage.py" = ["ALL"]
