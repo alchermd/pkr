@@ -64,9 +64,9 @@ dtest:
 	bash ./tests/docker-test.sh
 
 format:
-	uv tool run ruff check --select I --fix
-	uv tool run ruff format
-	uv tool run djlint src --reformat --format-css --format-js
+	uv run ruff check  --fix
+	uv run ruff format
+	uv run djlint src --reformat --format-css --format-js
 	cd src/frontend && npm run format
 	cd src/frontend && npm run eslint
 
@@ -78,9 +78,9 @@ lint-frontend:
 	cd src/frontend && npm run eslint -- --max-warnings=0
 
 lint-backend:
-	uv tool run ruff check --select I
-	uv tool run ruff format --check
-	uv tool run djlint src --check
+	uv run ruff check 
+	uv run ruff format --check
+	uv run djlint src --check
 
 lint: lint-backend lint-frontend
 
