@@ -67,7 +67,10 @@ ignore = [
     "S101", # use of assert (pytest allows plain assert)
 
     "S", # bandit is too noisy in general
-    "ANN204", # not a lot of value
+    # These annotation rules don't provide much value
+    "ANN204",
+    "ANN003",
+    "ANN002",
 ]
 
 fix = true
