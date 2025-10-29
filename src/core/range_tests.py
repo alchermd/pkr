@@ -8,9 +8,9 @@ from core.range import (
     load_range,
     load_range_from_csv,
     make_grid,
-    InvalidPositionException,
-    InvalidHandException,
-    InvalidActionException,
+    InvalidPositionError,
+    InvalidHandError,
+    InvalidActionError,
 )
 
 
@@ -42,7 +42,7 @@ class TestPreFlopRange:
 
         # When an invalid position is set
         # Then an exception is raised
-        with pytest.raises(InvalidPositionException):
+        with pytest.raises(InvalidPositionError):
             pfr.set_action("INVALID_POS", "AKs", "open")
 
     def test_checks_for_invalid_hands(self):
@@ -51,7 +51,7 @@ class TestPreFlopRange:
 
         # When an invalid hand is set
         # Then an exception is raised
-        with pytest.raises(InvalidHandException):
+        with pytest.raises(InvalidHandError):
             pfr.set_action("BTN", "INVALID_HAND", "open")
 
     def test_checks_for_invalid_actions(self):
@@ -60,7 +60,7 @@ class TestPreFlopRange:
 
         # When an invalid action is set
         # Then an exception is raised
-        with pytest.raises(InvalidActionException):
+        with pytest.raises(InvalidActionError):
             pfr.set_action("BTN", "AKs", "INVALID_ACTION")
 
     def test_defaults_to_fold_for_unset_entries(self):
