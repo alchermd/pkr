@@ -7,6 +7,18 @@ from core import constants
 RANGE_FILES_DIR = Path(__file__).parent / "range_files"
 
 
+class InvalidPositionException(Exception):
+    pass
+
+
+class InvalidHandException(Exception):
+    pass
+
+
+class InvalidActionException(Exception):
+    pass
+
+
 class PreFlopRange:
     def __init__(self, name: str, description: str = ""):
         self.name = name
@@ -17,11 +29,11 @@ class PreFlopRange:
 
     def set_action(self, position: str, hand: str, action: str):
         if position not in constants.POSITIONS:
-            raise ValueError(f"Invalid position: {position}")
+            raise InvalidPositionException(f"Invalid position: {position}")
         if hand not in constants.HANDS:
-            raise ValueError(f"Invalid hand: {hand}")
+            raise InvalidHandException(f"Invalid hand: {hand}")
         if action not in constants.ACTIONS:
-            raise ValueError(f"Invalid action: {action}")
+            raise InvalidActionException(f"Invalid action: {action}")
         self.entries[(position, hand)] = action
         self.positions.add(position)
 

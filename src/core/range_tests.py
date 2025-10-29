@@ -2,7 +2,16 @@ from unittest.mock import mock_open, patch
 
 import pytest
 
-from core.range import PreFlopRange, load_range, load_range_from_csv, make_grid
+from core.constants import CARDS_IN_SUIT
+from core.range import (
+    PreFlopRange,
+    load_range,
+    load_range_from_csv,
+    make_grid,
+    InvalidPositionException,
+    InvalidHandException,
+    InvalidActionException,
+)
 
 
 class TestPreFlopRange:
@@ -32,8 +41,8 @@ class TestPreFlopRange:
         pfr = PreFlopRange("test-range")
 
         # When an invalid position is set
-        # Then a ValueError is raised
-        with pytest.raises(ValueError):
+        # Then an exception is raised
+        with pytest.raises(InvalidPositionException):
             pfr.set_action("INVALID_POS", "AKs", "open")
 
     def test_checks_for_invalid_hands(self):
@@ -41,8 +50,8 @@ class TestPreFlopRange:
         pfr = PreFlopRange("test-range")
 
         # When an invalid hand is set
-        # Then a ValueError is raised
-        with pytest.raises(ValueError):
+        # Then an exception is raised
+        with pytest.raises(InvalidHandException):
             pfr.set_action("BTN", "INVALID_HAND", "open")
 
     def test_checks_for_invalid_actions(self):
@@ -50,8 +59,8 @@ class TestPreFlopRange:
         pfr = PreFlopRange("test-range")
 
         # When an invalid action is set
-        # Then a ValueError is raised
-        with pytest.raises(ValueError):
+        # Then an exception is raised
+        with pytest.raises(InvalidActionException):
             pfr.set_action("BTN", "AKs", "INVALID_ACTION")
 
     def test_defaults_to_fold_for_unset_entries(self):
@@ -121,10 +130,11 @@ class TestLoadRange:
 
         # When loading the range by name
         # Then a FileNotFoundError is raised
-        with patch("builtins.open", mock_open(read_data=mock_json)):
-            with pytest.raises(FileNotFoundError):
-                load_range("incomplete_range")
-
+        with (
+            patch("builtins.open", mock_open(read_data=mock_json)),
+            pytest.raises(FileNotFoundError),
+        ):
+            load_range("incomplete_range")
 
 class TestMakeGrid:
     def test_grid_dimension_and_labels(self):
@@ -137,9 +147,9 @@ class TestMakeGrid:
         # When building the grid for BTN
         grid = make_grid(pfr, "BTN")
 
-        # Then the grid is 13x13
-        assert len(grid) == 13
-        assert all(len(row) == 13 for row in grid)
+        # Then the grid is CARDS_IN_SUIT x CARDS_IN_SUIT
+        assert len(grid) == CARDS_IN_SUIT
+        assert all(len(row) == CARDS_IN_SUIT for row in grid)
 
         # And the cell labels are correct
         assert grid[0][1]["label"] == "AKs"
