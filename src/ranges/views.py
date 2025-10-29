@@ -37,7 +37,6 @@ def range_quiz(request: HttpRequest, range_id: int) -> HttpResponse:
 def get_range_details(range_id: int) -> dict:
     preflop_range = get_object_or_404(PreFlopRange, id=range_id)
 
-
     grids = preflop_range.format_grids()
     return {
         "initial_data": {

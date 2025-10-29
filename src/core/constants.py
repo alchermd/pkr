@@ -1,10 +1,9 @@
-
 POSITIONS = ["UTG", "HJ", "CO", "BTN", "SB", "BB"]
 ACTIONS = ["fold", "open", "call", "3bet", "4bet"]
 RANKS = "AKQJT98765432"
 POSITION_ORDER = ["UTG", "HJ", "CO", "BTN", "SB", "BB"]
 CARDS_IN_SUIT = 13
-TOTAL_HANDS = (CARDS_IN_SUIT + ((CARDS_IN_SUIT * (CARDS_IN_SUIT - 1)) // 2) * 2)
+TOTAL_HANDS = CARDS_IN_SUIT + ((CARDS_IN_SUIT * (CARDS_IN_SUIT - 1)) // 2) * 2
 
 
 # Generate canonical 169 hands (pairs, suited, offsuit)

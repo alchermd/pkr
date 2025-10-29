@@ -107,9 +107,11 @@ def make_grid(preflop_range: PreFlopRange, position: str) -> list[list[GridCell]
                 hand = f"{r2}{r1}o"
             else:
                 hand = f"{r1}{r1}"
-            row.append({
-                "label": hand,
-                "action": preflop_range.get_action(position, hand),
-            })
+            row.append(
+                {
+                    "label": hand,
+                    "action": preflop_range.get_action(position, hand),
+                }
+            )
         grid.append(row)
     return grid

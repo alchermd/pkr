@@ -136,6 +136,7 @@ class TestLoadRange:
         ):
             load_range("incomplete_range")
 
+
 class TestMakeGrid:
     def test_grid_dimension_and_labels(self):
         # Given a PreFlopRange with some actions set
