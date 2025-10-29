@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 import pytest
 from django.test import Client
 from django.urls import reverse
@@ -24,11 +26,11 @@ class TestRangeDetailView:
 
     def test_404_for_invalid_id(self, authenticated_client: Client):
         response = authenticated_client.get(reverse("ranges:range_detail", args=[42]))
-        assert 404 == response.status_code
+        assert response.status_code == HTTPStatus.NOT_FOUND
 
 
 @pytest.mark.django_db
-class TestRangeDetailView:
+class TestRangeQuizView:
     def test_renders_expected_template(self, authenticated_client: Client):
         pfr = PreFlopRange.objects.create(name="Test Range", description="A test range")
         response = authenticated_client.get(reverse("ranges:range_quiz", args=[pfr.id]))
@@ -36,4 +38,4 @@ class TestRangeDetailView:
 
     def test_404_for_invalid_id(self, authenticated_client: Client):
         response = authenticated_client.get(reverse("ranges:range_quiz", args=[42]))
-        assert 404 == response.status_code
+        assert response.status_code == HTTPStatus.NOT_FOUND

@@ -1,7 +1,8 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
-from core.range import PreFlopRange as DomainPreFlopRange
+from core import constants
+from core.range import PreFlopRange as DomainPreFlopRange, make_grid
 
 
 class PreFlopRangeManager(models.Manager):
@@ -43,3 +44,23 @@ class PreFlopRange(models.Model):
 
     def __str__(self):
         return self.name
+
+    def format_grids(self) -> list[str, list[dict]]:
+        """
+        Transforms the PreFlopRange data into a list of grids per position
+        that's easier to consume in the frontend.
+
+        Example format: [
+         ('UTG', [{'action': 'open', 'label': 'AA'}, {'action': 'fold', 'label': '72o'}]),
+         ('MP', [{...}, {...}]),
+        ]
+        """
+        return [
+            (pos, make_grid(self, pos))
+            for pos in sorted(
+                self.positions,
+                key=lambda p: constants.POSITION_ORDER.index(p)
+                if p in constants.POSITION_ORDER
+                else 999,
+            )
+        ]
