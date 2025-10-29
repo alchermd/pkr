@@ -1,4 +1,3 @@
-from typing import List
 
 POSITIONS = ["UTG", "HJ", "CO", "BTN", "SB", "BB"]
 ACTIONS = ["fold", "open", "call", "3bet", "4bet"]
@@ -7,7 +6,7 @@ POSITION_ORDER = ["UTG", "HJ", "CO", "BTN", "SB", "BB"]
 
 
 # Generate canonical 169 hands (pairs, suited, offsuit)
-def generate_hands() -> List[str]:
+def generate_hands() -> list[str]:
     hands = []
 
     for i, r1 in enumerate(RANKS):

@@ -1,6 +1,5 @@
 import dataclasses
 import random
-from typing import Dict, List, Tuple
 
 from core import constants
 from core.range import PreFlopRange
@@ -18,9 +17,9 @@ class Attempt:
 class TrainingSession:
     def __init__(self, preflop_range: PreFlopRange):
         self.preflop_range = preflop_range
-        self.attempts: List[Attempt] = []
+        self.attempts: list[Attempt] = []
 
-    def random_scenario(self) -> Tuple[str, str]:
+    def random_scenario(self) -> tuple[str, str]:
         """Return (position, hand)."""
         position = random.choice(constants.POSITIONS)
         while position not in self.preflop_range.positions:
@@ -41,7 +40,7 @@ class TrainingSession:
         self.attempts.append(attempt)
         return correct
 
-    def stats(self) -> Dict[str, float]:
+    def stats(self) -> dict[str, float]:
         if not self.attempts:
             return {"accuracy": 0.0}
         correct = sum(1 for a in self.attempts if a.correct)

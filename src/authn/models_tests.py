@@ -1,6 +1,5 @@
 import pytest
 from allauth.socialaccount.models import SocialAccount
-from django.contrib.auth import get_user_model
 
 
 @pytest.mark.django_db
@@ -12,8 +11,8 @@ class TestUser:
             provider="google",
             extra_data={"picture": "example.com/picture.jpg"},
         )
-        assert "example.com/picture.jpg" == user.profile_picture
+        assert user.profile_picture == "example.com/picture.jpg"
 
     def test_blank_profile_pictures_for_users_without_google_accounts(self, User):
         user = User.objects.create_user(username="testuser", password="testpass")
-        assert "" == user.profile_picture
+        assert user.profile_picture == ""

@@ -44,8 +44,8 @@ class TestGuestRequired:
         response = view(request)
 
         # Then they are redirected to the LOGIN_REDIRECT_URL
-        assert 302 == response.status_code
-        assert settings.LOGIN_REDIRECT_URL == response.url
+        assert response.status_code == 302
+        assert response.url == settings.LOGIN_REDIRECT_URL
 
     def test_guest_required_allows_anonymous_user(self, mock_view):
         # Given an anonymous user
@@ -83,5 +83,5 @@ class TestGuestRequired:
         response = decorated(request)
 
         # Then the user is redirected to LOGIN_REDIRECT_URL
-        assert 302 == response.status_code
-        assert settings.LOGIN_REDIRECT_URL == response.url
+        assert response.status_code == 302
+        assert response.url == settings.LOGIN_REDIRECT_URL

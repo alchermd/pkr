@@ -14,7 +14,7 @@ class TestPreFlopRange:
         pfr.set_action("BTN", "AKs", "open")
 
         # Then the action can be retrieved
-        assert "open" == pfr.get_action("BTN", "AKs")
+        assert pfr.get_action("BTN", "AKs") == "open"
 
     def test_keeps_track_of_available_positions(self):
         # Given a range
@@ -62,7 +62,7 @@ class TestPreFlopRange:
         action = pfr.get_action("BTN", "AKs")
 
         # Then the action defaults to "fold"
-        assert "fold" == action
+        assert action == "fold"
 
 
 class TestLoadRangeFromCSV:
@@ -75,9 +75,9 @@ class TestLoadRangeFromCSV:
             pfr = load_range_from_csv("dummy.csv", name="Test Range")
 
         # Then the range instance created contains the expected actions
-        assert "open" == pfr.get_action("BTN", "AKs")
-        assert "call" == pfr.get_action("CO", "AQo")
-        assert "fold" == pfr.get_action("UTG", "22")
+        assert pfr.get_action("BTN", "AKs") == "open"
+        assert pfr.get_action("CO", "AQo") == "call"
+        assert pfr.get_action("UTG", "22") == "fold"
 
 
 class TestLoadRange:
@@ -97,9 +97,9 @@ class TestLoadRange:
         pfr = load_range("test_range")
 
         # Then the range instance created contains the expected metadata and actions
-        assert "Test Range" == pfr.name
-        assert "A test range" == pfr.description
-        assert "open" == pfr.get_action("BTN", "AKs")
+        assert pfr.name == "Test Range"
+        assert pfr.description == "A test range"
+        assert pfr.get_action("BTN", "AKs") == "open"
 
     @patch("pathlib.Path.exists")
     def test_can_handle_missing_metadata_when_loading_range_by_filename(

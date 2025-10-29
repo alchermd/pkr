@@ -1,7 +1,6 @@
 import csv
 import json
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
 
 from core import constants
 
@@ -12,8 +11,8 @@ class PreFlopRange:
     def __init__(self, name: str, description: str = ""):
         self.name = name
         # Dict[(position, hand)] -> action
-        self.entries: Dict[Tuple[str, str], str] = {}
-        self.positions: Set[str] = set()
+        self.entries: dict[tuple[str, str], str] = {}
+        self.positions: set[str] = set()
         self.description = description
 
     def set_action(self, position: str, hand: str, action: str):
