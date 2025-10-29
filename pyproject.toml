@@ -71,6 +71,8 @@ ignore = [
     "ANN204",
     "ANN003",
     "ANN002",
+
+    "PTH123", # don't agree with the premise
 ]
 
 fix = true
