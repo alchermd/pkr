@@ -45,7 +45,7 @@ class PreFlopRange(models.Model):
     def __str__(self):
         return self.name
 
-    def format_grids(self) -> list[str, list[dict]]:
+    def format_grids(self) -> list[tuple[str, list[dict]]]:
         """
         Transforms the PreFlopRange data into a list of grids per position
         that's easier to consume in the frontend.
@@ -56,7 +56,7 @@ class PreFlopRange(models.Model):
         ]
         """
         return [
-            (pos, make_grid(self, pos))
+            (pos, make_grid(self.to_domain(), pos))
             for pos in sorted(
                 self.positions,
                 key=lambda p: constants.POSITION_ORDER.index(p)
