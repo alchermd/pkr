@@ -1,4 +1,4 @@
-from core.constants import generate_hands
+from core.constants import generate_hands, TOTAL_HANDS
 
 
 class TestConstants:
@@ -7,7 +7,7 @@ class TestConstants:
         hands = generate_hands()
 
         # Then there are 13 ranks -> 13 pairs, 78 combinations * 2 suited/offsuit = 169 hands total
-        assert len(hands) == 169
+        assert len(hands) == TOTAL_HANDS
 
         # ... and pairs exist and are in correct format
         assert "AA" in hands

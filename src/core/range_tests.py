@@ -2,7 +2,16 @@ from unittest.mock import mock_open, patch
 
 import pytest
 
-from core.range import PreFlopRange, load_range, load_range_from_csv, make_grid
+from core.constants import CARDS_IN_SUIT
+from core.range import (
+    PreFlopRange,
+    load_range,
+    load_range_from_csv,
+    make_grid,
+    InvalidPositionError,
+    InvalidHandError,
+    InvalidActionError,
+)
 
 
 class TestPreFlopRange:
@@ -14,7 +23,7 @@ class TestPreFlopRange:
         pfr.set_action("BTN", "AKs", "open")
 
         # Then the action can be retrieved
-        assert "open" == pfr.get_action("BTN", "AKs")
+        assert pfr.get_action("BTN", "AKs") == "open"
 
     def test_keeps_track_of_available_positions(self):
         # Given a range
@@ -32,8 +41,8 @@ class TestPreFlopRange:
         pfr = PreFlopRange("test-range")
 
         # When an invalid position is set
-        # Then a ValueError is raised
-        with pytest.raises(ValueError):
+        # Then an exception is raised
+        with pytest.raises(InvalidPositionError):
             pfr.set_action("INVALID_POS", "AKs", "open")
 
     def test_checks_for_invalid_hands(self):
@@ -41,8 +50,8 @@ class TestPreFlopRange:
         pfr = PreFlopRange("test-range")
 
         # When an invalid hand is set
-        # Then a ValueError is raised
-        with pytest.raises(ValueError):
+        # Then an exception is raised
+        with pytest.raises(InvalidHandError):
             pfr.set_action("BTN", "INVALID_HAND", "open")
 
     def test_checks_for_invalid_actions(self):
@@ -50,8 +59,8 @@ class TestPreFlopRange:
         pfr = PreFlopRange("test-range")
 
         # When an invalid action is set
-        # Then a ValueError is raised
-        with pytest.raises(ValueError):
+        # Then an exception is raised
+        with pytest.raises(InvalidActionError):
             pfr.set_action("BTN", "AKs", "INVALID_ACTION")
 
     def test_defaults_to_fold_for_unset_entries(self):
@@ -62,7 +71,7 @@ class TestPreFlopRange:
         action = pfr.get_action("BTN", "AKs")
 
         # Then the action defaults to "fold"
-        assert "fold" == action
+        assert action == "fold"
 
 
 class TestLoadRangeFromCSV:
@@ -75,9 +84,9 @@ class TestLoadRangeFromCSV:
             pfr = load_range_from_csv("dummy.csv", name="Test Range")
 
         # Then the range instance created contains the expected actions
-        assert "open" == pfr.get_action("BTN", "AKs")
-        assert "call" == pfr.get_action("CO", "AQo")
-        assert "fold" == pfr.get_action("UTG", "22")
+        assert pfr.get_action("BTN", "AKs") == "open"
+        assert pfr.get_action("CO", "AQo") == "call"
+        assert pfr.get_action("UTG", "22") == "fold"
 
 
 class TestLoadRange:
@@ -97,9 +106,9 @@ class TestLoadRange:
         pfr = load_range("test_range")
 
         # Then the range instance created contains the expected metadata and actions
-        assert "Test Range" == pfr.name
-        assert "A test range" == pfr.description
-        assert "open" == pfr.get_action("BTN", "AKs")
+        assert pfr.name == "Test Range"
+        assert pfr.description == "A test range"
+        assert pfr.get_action("BTN", "AKs") == "open"
 
     @patch("pathlib.Path.exists")
     def test_can_handle_missing_metadata_when_loading_range_by_filename(
@@ -121,9 +130,11 @@ class TestLoadRange:
 
         # When loading the range by name
         # Then a FileNotFoundError is raised
-        with patch("builtins.open", mock_open(read_data=mock_json)):
-            with pytest.raises(FileNotFoundError):
-                load_range("incomplete_range")
+        with (
+            patch("builtins.open", mock_open(read_data=mock_json)),
+            pytest.raises(FileNotFoundError),
+        ):
+            load_range("incomplete_range")
 
 
 class TestMakeGrid:
@@ -137,9 +148,9 @@ class TestMakeGrid:
         # When building the grid for BTN
         grid = make_grid(pfr, "BTN")
 
-        # Then the grid is 13x13
-        assert len(grid) == 13
-        assert all(len(row) == 13 for row in grid)
+        # Then the grid is CARDS_IN_SUIT x CARDS_IN_SUIT
+        assert len(grid) == CARDS_IN_SUIT
+        assert all(len(row) == CARDS_IN_SUIT for row in grid)
 
         # And the cell labels are correct
         assert grid[0][1]["label"] == "AKs"

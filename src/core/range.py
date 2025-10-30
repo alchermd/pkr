@@ -1,28 +1,43 @@
 import csv
 import json
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
+from typing import TypedDict
 
 from core import constants
 
 RANGE_FILES_DIR = Path(__file__).parent / "range_files"
 
 
+class InvalidPositionError(Exception):
+    pass
+
+
+class InvalidHandError(Exception):
+    pass
+
+
+class InvalidActionError(Exception):
+    pass
+
+
 class PreFlopRange:
     def __init__(self, name: str, description: str = ""):
         self.name = name
         # Dict[(position, hand)] -> action
-        self.entries: Dict[Tuple[str, str], str] = {}
-        self.positions: Set[str] = set()
+        self.entries: dict[tuple[str, str], str] = {}
+        self.positions: set[str] = set()
         self.description = description
 
-    def set_action(self, position: str, hand: str, action: str):
+    def set_action(self, position: str, hand: str, action: str) -> None:
         if position not in constants.POSITIONS:
-            raise ValueError(f"Invalid position: {position}")
+            msg = f"Invalid position: {position}"
+            raise InvalidPositionError(msg)
         if hand not in constants.HANDS:
-            raise ValueError(f"Invalid hand: {hand}")
+            msg = f"Invalid hand: {hand}"
+            raise InvalidHandError(msg)
         if action not in constants.ACTIONS:
-            raise ValueError(f"Invalid action: {action}")
+            msg = f"Invalid action: {action}"
+            raise InvalidActionError(msg)
         self.entries[(position, hand)] = action
         self.positions.add(position)
 
@@ -30,7 +45,7 @@ class PreFlopRange:
         return self.entries.get((position, hand), "fold")  # default to fold
 
 
-def load_range_from_csv(filename: str, name: str = None) -> PreFlopRange:
+def load_range_from_csv(filename: str, name: str | None = None) -> PreFlopRange:
     """
     Parse a CSV with header: pos,hand,action
     Returns a PreflopRange instance.
@@ -54,7 +69,8 @@ def load_range(base_name: str) -> PreFlopRange:
     """
     meta_path = RANGE_FILES_DIR / f"{base_name}.meta.json"
     if not meta_path.exists():
-        raise FileNotFoundError(f"No metadata file found for {base_name}")
+        msg = f"No metadata file found for {base_name}"
+        raise FileNotFoundError(msg)
 
     with open(meta_path) as f:
         meta = json.load(f)
@@ -62,7 +78,8 @@ def load_range(base_name: str) -> PreFlopRange:
     csv_filename = f"{base_name}.csv"
     csv_path = RANGE_FILES_DIR / csv_filename
     if not csv_path.exists():
-        raise FileNotFoundError(f"No CSV file found for {base_name}")
+        msg = f"No CSV file found for {base_name}"
+        raise FileNotFoundError(msg)
 
     preflop_range = load_range_from_csv(csv_filename)
     preflop_range.name = meta["name"]
@@ -70,14 +87,19 @@ def load_range(base_name: str) -> PreFlopRange:
     return preflop_range
 
 
-def make_grid(preflop_range: PreFlopRange, position: str):
+class GridCell(TypedDict):
+    label: str
+    action: str
+
+
+def make_grid(preflop_range: PreFlopRange, position: str) -> list[list[GridCell]]:
     """
     Build a 13x13 grid for a specific position.
     Each cell is {label: hand, action: str}.
     """
-    grid = []
+    grid: list[list[GridCell]] = []
     for i, r1 in enumerate(constants.RANKS):
-        row = []
+        row: list[GridCell] = []
         for j, r2 in enumerate(constants.RANKS):
             if i < j:
                 hand = f"{r1}{r2}s"

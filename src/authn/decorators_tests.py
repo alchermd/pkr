@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 import pytest
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
@@ -8,7 +10,7 @@ from authn.decorators import guest_required  # adjust import path
 
 @pytest.fixture
 def mock_view():
-    def view(request, *args, **kwargs):
+    def view(_request, *_args, **_kwargs):
         return HttpResponse("OK")
 
     return view
@@ -31,35 +33,35 @@ class MockAuthenticatedUser:
 
 
 class TestGuestRequired:
-    def test_guest_required_redirects_authenticated_user(self, mock_view):
+    def test_guest_required_redirects_authenticated_user(self):
         # Given an authenticated user
         user = MockAuthenticatedUser()
         request = make_request(user)
 
         @guest_required
-        def view(request):
+        def view(_request):
             return HttpResponse("OK")
 
         # When they access a guest-only view
         response = view(request)
 
         # Then they are redirected to the LOGIN_REDIRECT_URL
-        assert 302 == response.status_code
-        assert settings.LOGIN_REDIRECT_URL == response.url
+        assert response.status_code == HTTPStatus.FOUND
+        assert response.url == settings.LOGIN_REDIRECT_URL
 
-    def test_guest_required_allows_anonymous_user(self, mock_view):
+    def test_guest_required_allows_anonymous_user(self):
         # Given an anonymous user
         request = make_request()
 
         @guest_required
-        def view(request):
+        def view(_request):
             return HttpResponse("OK")
 
         # When they access a guest-only view
         response = view(request)
 
         # Then they receive a normal response
-        assert response.status_code == 200
+        assert response.status_code == HTTPStatus.OK
         assert response.content == b"OK"
 
     def test_guest_required_as_function_call(self, mock_view):
@@ -71,7 +73,7 @@ class TestGuestRequired:
         response = decorated(request)
 
         # Then the user gets a normal response
-        assert response.status_code == 200
+        assert response.status_code == HTTPStatus.OK
         assert response.content == b"OK"
 
     def test_guest_required_authenticated_with_parentheses(self, mock_view):
@@ -83,5 +85,5 @@ class TestGuestRequired:
         response = decorated(request)
 
         # Then the user is redirected to LOGIN_REDIRECT_URL
-        assert 302 == response.status_code
-        assert settings.LOGIN_REDIRECT_URL == response.url
+        assert response.status_code == HTTPStatus.FOUND
+        assert response.url == settings.LOGIN_REDIRECT_URL
